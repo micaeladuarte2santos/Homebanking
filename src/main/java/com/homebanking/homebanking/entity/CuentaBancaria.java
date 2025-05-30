@@ -7,20 +7,29 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name="cuenta_bancaria")
+@Data
 public class CuentaBancaria {
 
     @Id//clave primaria en al bd
     private Long nroCuenta;
 
-    @Embedded
-    private Cuenta cuenta;
+    @ManyToOne//un cliente tiene muchas cuentas bancarias
+    private Cliente cliente;
 
-    public CuentaBancaria(Cuenta c){
+    @Embedded
+    private CajaDeAhorro cuenta;
+
+    /*@Transient
+    private Cuenta cuenta;*/
+
+    public CuentaBancaria(CajaDeAhorro c){
         this.cuenta=c;
     }
 
