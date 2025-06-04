@@ -1,4 +1,4 @@
-package com.homebanking.homebanking.entity;
+package com.homebanking.homebanking.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

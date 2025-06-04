@@ -1,4 +1,4 @@
-package com.homebanking.homebanking.entity;
+package com.homebanking.homebanking.models;
 
 public interface Operacion {
     public void ejecutar();

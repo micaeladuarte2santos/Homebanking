@@ -1,4 +1,4 @@
-package com.homebanking.homebanking.entity;
+package com.homebanking.homebanking.models;
 
 import java.util.ArrayList;
 import java.util.List;
