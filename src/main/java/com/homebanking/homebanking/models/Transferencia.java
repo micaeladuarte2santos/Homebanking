@@ -15,8 +15,8 @@ public class Transferencia implements Operacion{
     @Override
     public void ejecutar() {
         if(origen.getSaldo()>= monto){
-            origen.retirar(monto);
-            destino.depositar(monto);
+            origen.getCuenta().retirar(monto);
+            destino.getCuenta().depositar(monto);
         }else{
             throw new IllegalArgumentException("Saldo insuficiente en transferencia");
         }

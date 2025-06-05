@@ -10,7 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="cuenta_bancaria")
@@ -37,15 +40,7 @@ public class CuentaBancaria {
     //si borro una cuenta, se borran los movimientos de esa cuenta de la bd
     private List<Movimiento> historial = new ArrayList<>();
 
-    public void depositar(double monto) {
-        cuenta.depositar(monto);
-        historial.add(new Movimiento(this.nroCuenta,TipoMovimiento.Deposito, monto));
-    }
 
-    public void retirar(double monto) {
-        cuenta.retirar(monto);
-        historial.add(new Movimiento(this.nroCuenta,TipoMovimiento.Retiro, -monto));
-    }
 
     public double getSaldo() {
         return cuenta.consultarSaldo();

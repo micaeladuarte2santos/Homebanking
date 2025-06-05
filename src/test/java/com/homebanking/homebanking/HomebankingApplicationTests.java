@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 //import org.springframework.boot.test.context.SpringBootTest;
-import com.homebanking.homebanking.entity.CajaDeAhorro;
-import com.homebanking.homebanking.entity.Cuenta;
-import com.homebanking.homebanking.entity.CuentaBancaria;
-import com.homebanking.homebanking.entity.Transferencia;
+import com.homebanking.homebanking.models.CajaDeAhorro;
+import com.homebanking.homebanking.models.Cuenta;
+import com.homebanking.homebanking.models.CuentaBancaria;
+import com.homebanking.homebanking.models.Transferencia;
 
 //@SpringBootTest
 class HomebankingApplicationTests {

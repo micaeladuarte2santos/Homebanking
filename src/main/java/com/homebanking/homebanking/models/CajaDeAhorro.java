@@ -1,5 +1,7 @@
 package com.homebanking.homebanking.models;
 
+import com.homebanking.homebanking.exceptions.SaldoInsuficienteException;
+
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +25,7 @@ public class CajaDeAhorro implements Cuenta{
          if (monto <= saldo) {
             saldo -= monto;
         } else {
-            throw new IllegalArgumentException("Saldo insuficiente");
+            throw new SaldoInsuficienteException();
         }
     }
 
