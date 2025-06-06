@@ -1,5 +1,6 @@
 package com.homebanking.homebanking.models;
 
+import com.homebanking.homebanking.exceptions.MontoInvalidoException;
 import com.homebanking.homebanking.exceptions.SaldoInsuficienteException;
 
 import jakarta.persistence.Embeddable;
@@ -17,6 +18,9 @@ public class CajaDeAhorro implements Cuenta{
 
     @Override
     public void depositar(Double monto) {
+        if (monto <= 0) {
+            throw new MontoInvalidoException();
+        }
         this.saldo+=monto;
     }
 
