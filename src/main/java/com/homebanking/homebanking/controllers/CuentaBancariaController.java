@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.homebanking.homebanking.models.CuentaBancaria;
+import com.homebanking.homebanking.models.Movimiento;
 import com.homebanking.homebanking.services.CuentaBancariaService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,11 @@ public class CuentaBancariaController {
         cuentaService.transferir(origen, destino, monto);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{nroCuenta}/movimientos")
+    public List<Movimiento> obtenerMovimientos(@PathVariable Long nroCuenta) {
+        return cuentaService.obtenerMovimientosDeCuenta(nroCuenta);
     }
     
 }

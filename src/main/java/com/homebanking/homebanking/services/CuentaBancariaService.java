@@ -46,8 +46,7 @@ public class CuentaBancariaService {
     @Transactional
     public void depositar(Long nroCuenta, double monto) {
         //chequeo si existe la cuenta en la bd, sino lanzo excepcion
-        CuentaBancaria cuentaBancaria = cuentaBancariaRepository.findById(nroCuenta)
-        .orElseThrow(() -> new CuentaInexistenteException(nroCuenta));
+        CuentaBancaria cuentaBancaria = buscarCuenta(nroCuenta);
         
         //obtengo la caja de ahorro de la cuenta bancaria y deposito en ella el monto
         cuentaBancaria.getCuenta().depositar(monto);
@@ -60,8 +59,7 @@ public class CuentaBancariaService {
 
     @Transactional
     public void retirar(Long nroCuenta, double monto) {
-        CuentaBancaria cuentaBancaria = cuentaBancariaRepository.findById(nroCuenta)
-        .orElseThrow(() -> new  CuentaInexistenteException(nroCuenta));
+        CuentaBancaria cuentaBancaria = buscarCuenta(nroCuenta);
 
         cuentaBancaria.getCuenta().retirar(monto);
         cuentaBancariaRepository.save(cuentaBancaria);
@@ -87,7 +85,7 @@ public class CuentaBancariaService {
     }
 
     public List<Movimiento> obtenerMovimientosDeCuenta(Long nroCuenta){
-        //chequear que la cuenta exista
+        buscarCuenta(nroCuenta);
         return movimientoRepository.findMovimientosByNroCuenta(nroCuenta);
     }
 
