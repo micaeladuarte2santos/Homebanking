@@ -126,8 +126,7 @@ public class TestCuentaBancariaService {
         Long nroCuenta = 1L;
         double monto = 200.0;
 
-        CajaDeAhorro cuenta = new CajaDeAhorro();
-        cuenta.setSaldo(300);
+        CajaDeAhorro cuenta = new CajaDeAhorro(300);
         CuentaBancaria cuentaBancaria = new CuentaBancaria(null);
         cuentaBancaria.setNroCuenta(nroCuenta);
         cuentaBancaria.setCuenta(cuenta);
@@ -136,8 +135,7 @@ public class TestCuentaBancariaService {
 
         cuentaBancariaService.retirar(nroCuenta, monto);
 
-        verify(cuenta).retirar(monto);
-        verify(cuentaBancariaRepository).save(cuentaBancaria);
+        assertEquals(100, cuenta.getSaldo());
     }
 
     @Test
@@ -145,17 +143,120 @@ public class TestCuentaBancariaService {
         Long nroCuenta = 1L;
         double monto = 200.0;
 
-        CajaDeAhorro cuenta = mock(CajaDeAhorro.class);
+        CajaDeAhorro cuenta = new CajaDeAhorro(100);
         CuentaBancaria cuentaBancaria = new CuentaBancaria(null);
         cuentaBancaria.setNroCuenta(nroCuenta);
         cuentaBancaria.setCuenta(cuenta);
 
         when(cuentaBancariaRepository.findById(nroCuenta)).thenReturn(Optional.of(cuentaBancaria));
-
-        doThrow(new SaldoInsuficienteException()).when(cuenta).retirar(monto);
-
         assertThrows(SaldoInsuficienteException.class, () -> cuentaBancariaService.retirar(nroCuenta, monto));
     }
 
+    @Test
+    void testRetirarACuentaInexistente() {
+        Long nroCuenta = 999L;
+        double monto = 200.0;
+
+        when(cuentaBancariaRepository.findById(nroCuenta)).thenReturn(Optional.empty());
+
+        assertThrows(CuentaInexistenteException.class, () -> cuentaBancariaService.retirar(nroCuenta, monto));
+    }
+
+    @Test
+    void testTransferenciaValida(){
+        Long nroCuentaO = 1L;
+        Long nroCuentaD = 2L;
+        double monto = 200.0;
+
+        CajaDeAhorro cuentaO = new CajaDeAhorro(500);
+        CajaDeAhorro cuentaD = new CajaDeAhorro(200);
+
+        CuentaBancaria cuentaBancariaO = new CuentaBancaria(null);
+        cuentaBancariaO.setNroCuenta(nroCuentaO);
+        cuentaBancariaO.setCuenta(cuentaO);
+
+        CuentaBancaria cuentaBancariaD = new CuentaBancaria(null);
+        cuentaBancariaD.setNroCuenta(nroCuentaD);
+        cuentaBancariaD.setCuenta(cuentaD);
+
+        when(cuentaBancariaRepository.existsById(nroCuentaO)).thenReturn(true);
+        when(cuentaBancariaRepository.existsById(nroCuentaD)).thenReturn(true);
+
+        cuentaBancariaService.transferir(cuentaBancariaO, cuentaBancariaD, monto);
+
+        assertEquals(400, cuentaD.getSaldo());
+        assertEquals(300, cuentaO.getSaldo());
+    }
+
+    @Test
+    void testTransferenciaSaldoInsuficiente(){
+        Long nroCuentaO = 1L;
+        Long nroCuentaD = 2L;
+        double monto = 200.0;
+
+        CajaDeAhorro cuentaO = new CajaDeAhorro(100);
+        CajaDeAhorro cuentaD = new CajaDeAhorro(500);
+
+        CuentaBancaria cuentaBancariaO = new CuentaBancaria(null);
+        cuentaBancariaO.setNroCuenta(nroCuentaO);
+        cuentaBancariaO.setCuenta(cuentaO);
+
+        CuentaBancaria cuentaBancariaD = new CuentaBancaria(null);
+        cuentaBancariaD.setNroCuenta(nroCuentaD);
+        cuentaBancariaD.setCuenta(cuentaD);
+
+        when(cuentaBancariaRepository.existsById(nroCuentaO)).thenReturn(true);
+        when(cuentaBancariaRepository.existsById(nroCuentaD)).thenReturn(true);
+
+        assertThrows(SaldoInsuficienteException.class, () -> cuentaBancariaService.transferir(cuentaBancariaO, cuentaBancariaD, monto));
+    }
+
+    @Test
+    void testTransferenciaCuentaInexistente(){
+        Long nroCuentaO = 1L;
+        Long nroCuentaD = 2L;
+        double monto = 200.0;
+
+        CajaDeAhorro cuentaO = new CajaDeAhorro(100);
+        CajaDeAhorro cuentaD = new CajaDeAhorro(500);
+
+        CuentaBancaria cuentaBancariaO = new CuentaBancaria(null);
+        cuentaBancariaO.setNroCuenta(nroCuentaO);
+        cuentaBancariaO.setCuenta(cuentaO);
+
+        CuentaBancaria cuentaBancariaD = new CuentaBancaria(null);
+        cuentaBancariaD.setNroCuenta(nroCuentaD);
+        cuentaBancariaD.setCuenta(cuentaD);
+
+        when(cuentaBancariaRepository.existsById(nroCuentaO)).thenReturn(true);
+        when(cuentaBancariaRepository.findById(nroCuentaD)).thenReturn(Optional.empty());
+
+        assertThrows(CuentaInexistenteException.class, () -> cuentaBancariaService.transferir(cuentaBancariaO, cuentaBancariaD, monto));
+        
+    }
+
+    @Test
+    void testTransferenciaMontoInvalido(){
+        Long nroCuentaO = 1L;
+        Long nroCuentaD = 2L;
+        double monto = -200.0;
+
+        CajaDeAhorro cuentaO = new CajaDeAhorro(1000);
+        CajaDeAhorro cuentaD = new CajaDeAhorro(500);
+
+        CuentaBancaria cuentaBancariaO = new CuentaBancaria(null);
+        cuentaBancariaO.setNroCuenta(nroCuentaO);
+        cuentaBancariaO.setCuenta(cuentaO);
+
+        CuentaBancaria cuentaBancariaD = new CuentaBancaria(null);
+        cuentaBancariaD.setNroCuenta(nroCuentaD);
+        cuentaBancariaD.setCuenta(cuentaD);
+
+        when(cuentaBancariaRepository.existsById(nroCuentaO)).thenReturn(true);
+        when(cuentaBancariaRepository.existsById(nroCuentaD)).thenReturn(true);
+
+        assertThrows(MontoInvalidoException.class, () -> cuentaBancariaService.transferir(cuentaBancariaO, cuentaBancariaD, monto));
+        
+    }
 
 }

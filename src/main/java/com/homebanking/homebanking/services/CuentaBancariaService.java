@@ -1,20 +1,18 @@
 package com.homebanking.homebanking.services;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.homebanking.homebanking.exceptions.CuentaInexistenteException;
 import com.homebanking.homebanking.exceptions.DniInexistenteException;
 import com.homebanking.homebanking.models.CuentaBancaria;
 import com.homebanking.homebanking.models.Movimiento;
 import com.homebanking.homebanking.models.TipoMovimiento;
+import com.homebanking.homebanking.models.Transferencia;
 import com.homebanking.homebanking.repositories.ClienteRepository;
 import com.homebanking.homebanking.repositories.CuentaBancariaRepository;
 import com.homebanking.homebanking.repositories.MovimientoRepository;
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -32,11 +30,12 @@ public class CuentaBancariaService {
     @Autowired
     private MovimientoRepository movimientoRepository;
 
-
-    public Optional<CuentaBancaria> buscarCuenta(Long nroCuenta) {
-        return cuentaBancariaRepository.findById(nroCuenta);
+    @Transactional(readOnly=true)
+    public CuentaBancaria buscarCuenta(Long nroCuenta) {
+        return cuentaBancariaRepository.findById(nroCuenta).orElseThrow(()-> new CuentaInexistenteException(nroCuenta));
     }
 
+    @Transactional(readOnly=true)
     public List<CuentaBancaria> encontrarCuentasPorDNI(String dni){
         if(clienteRepository.findByDni(dni).isEmpty()){
             throw new DniInexistenteException(dni);
@@ -44,6 +43,7 @@ public class CuentaBancariaService {
         return cuentaBancariaRepository.cuentasPorDni(dni);
     }
 
+    @Transactional
     public void depositar(Long nroCuenta, double monto) {
         //chequeo si existe la cuenta en la bd, sino lanzo excepcion
         CuentaBancaria cuentaBancaria = cuentaBancariaRepository.findById(nroCuenta)
@@ -58,6 +58,7 @@ public class CuentaBancariaService {
         movimientoRepository.save(mov);
     }
 
+    @Transactional
     public void retirar(Long nroCuenta, double monto) {
         CuentaBancaria cuentaBancaria = cuentaBancariaRepository.findById(nroCuenta)
         .orElseThrow(() -> new  CuentaInexistenteException(nroCuenta));
@@ -69,24 +70,27 @@ public class CuentaBancariaService {
         movimientoRepository.save(mov);
     }
 
-    /*public void transferir(Long nroCuentaOrigen, Long nroCuentaDestino, double monto) {
-        CuentaBancaria origen = cuentaBancariaRepository.findById(nroCuentaOrigen)
-                .orElseThrow(() -> new CuentaInexistenteException(nroCuentaOrigen));
+    @Transactional
+    public void transferir(CuentaBancaria origen, CuentaBancaria destino, double monto) {
 
-        CuentaBancaria destino = cuentaBancariaRepository.findById(nroCuentaDestino)
-                .orElseThrow(() -> new CuentaInexistenteException(nroCuentaDestino));
+        if(cuentaBancariaRepository.existsById(origen.getNroCuenta())){
+            if(cuentaBancariaRepository.existsById(destino.getNroCuenta())){
+                Transferencia transferencia = new Transferencia(origen, destino, monto);
+                transferencia.ejecutar();
+            }else{
+                throw new CuentaInexistenteException(destino.getNroCuenta());
+            }
+        }else{
+            throw new CuentaInexistenteException(origen.getNroCuenta());
+        }
 
-        origen.getCuenta().depositar(monto);
-        destino.depositar(monto);
-
-        cuentaBancariaRepository.save(origen);
-        cuentaBancariaRepository.save(destino);
-    }*/
+    }
 
     public List<Movimiento> obtenerMovimientosDeCuenta(Long nroCuenta){
         //chequear que la cuenta exista
         return movimientoRepository.findMovimientosByNroCuenta(nroCuenta);
     }
+
 
     /*
      * Scanner scanner = new Scanner(System.in);

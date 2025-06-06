@@ -1,5 +1,7 @@
 package com.homebanking.homebanking.models;
 
+import com.homebanking.homebanking.exceptions.SaldoInsuficienteException;
+
 public class Transferencia implements Operacion{
 
     private CuentaBancaria origen;
@@ -18,7 +20,7 @@ public class Transferencia implements Operacion{
             origen.getCuenta().retirar(monto);
             destino.getCuenta().depositar(monto);
         }else{
-            throw new IllegalArgumentException("Saldo insuficiente en transferencia");
+            throw new SaldoInsuficienteException();
         }
     }
 
