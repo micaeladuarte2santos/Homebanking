@@ -4,7 +4,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
   margin: 0;
 }
 
@@ -21,25 +21,4 @@ body {
 h2 {
   margin-bottom: 20px;
   color: #00796b;
-}
-
-/* Opcional: estilos para la tabla, para que quede linda dentro del container */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-thead {
-  background-color: #00796b;
-  color: white;
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #b2dfdb;
-}
-
-tbody tr:hover {
-  background-color: #e0f7fa;
 }
