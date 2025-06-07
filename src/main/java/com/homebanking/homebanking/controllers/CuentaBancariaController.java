@@ -24,7 +24,14 @@ public class CuentaBancariaController {
     @Autowired
     private CuentaBancariaService cuentaService;
 
-    @GetMapping("/{dni}")
+    @GetMapping("/{nroCuenta}")
+    public ResponseEntity<CuentaBancaria> getCuentaBancaria(@PathVariable Long nroCuenta) {
+        CuentaBancaria cuenta = cuentaService.buscarCuenta(nroCuenta);
+        return ResponseEntity.ok(cuenta);
+    }
+
+
+    @GetMapping("/dni/{dni}")
     public List<CuentaBancaria> obtenerCuentasPorDni(@PathVariable String dni) {
         return cuentaService.encontrarCuentasPorDNI(dni);
     }
