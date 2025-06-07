@@ -25,12 +25,6 @@ public class CuentaBancaria {
 
     @Embedded
     private CajaDeAhorro cuenta;
-
-    /*@Transient
-    private Cuenta cuenta;*/
-    public CuentaBancaria() {
-        // Constructor vacío requerido por Hibernate
-    }
     
     public CuentaBancaria(CajaDeAhorro c){
         this.cuenta=c;
@@ -41,7 +35,6 @@ public class CuentaBancaria {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)//Una cuenta tiene muchos movimientos
     //si borro una cuenta, se borran los movimientos de esa cuenta de la bd
     private List<Movimiento> historial = new ArrayList<>();
-
 
 
     public double getSaldo() {

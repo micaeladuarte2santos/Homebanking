@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.homebanking.homebanking.exceptions.DniInexistenteException;
+import com.homebanking.homebanking.models.Cliente;
 import com.homebanking.homebanking.repositories.ClienteRepository;
 import com.homebanking.homebanking.validador.ValidarCliente;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,10 @@ public class ClienteService {
         /*HttpSession session = request.getSession();
 	    session.setAttribute("dni", dni);*//////
         return true;
+    }
+
+    public Cliente obtenerPorDni(String dni) {
+        return clienteRepository.findById(dni).orElseThrow(() -> new DniInexistenteException(dni));
     }
 
 }
