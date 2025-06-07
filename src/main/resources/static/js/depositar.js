@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const dni = sessionStorage.getItem("dni");
   const selectCuenta = document.getElementById("nroCuentas");
 
-  fetch(`http://localhost:8080/cuentas-bancarias/${dni}`)
+  fetch(`http://localhost:8080/cuentas-bancarias/dni/${dni}`)
     .then(res => res.json())
     .then(cuentas => {
       selectCuenta.innerHTML = '<option value="" disabled selected>Seleccione una cuenta</option>';

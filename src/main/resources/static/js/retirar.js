@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const dni = sessionStorage.getItem("dni");
   const selectCuenta = document.getElementById("nroCuentas");
 
-  fetch(`http://localhost:8080/cuentas-bancarias/${dni}`)
+  fetch(`http://localhost:8080/cuentas-bancarias/dni/${dni}`)
     .then(res => {
       if (!res.ok) throw new Error("No se pudieron cargar las cuentas");
       return res.json();

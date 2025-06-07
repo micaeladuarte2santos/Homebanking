@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const dni = sessionStorage.getItem("dni");
 
-  fetch(`http://localhost:8080/cuentas-bancarias/${dni}`)
+  fetch(`http://localhost:8080/cuentas-bancarias/dni/${dni}`)
     .then(response => response.json())
     .then(data => {
       const tableBody = document.getElementById("tablaCuentas");
