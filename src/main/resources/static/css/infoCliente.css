@@ -1,0 +1,22 @@
+body {
+  background-color: #f6fff7;
+  padding-top: 120px; 
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 800px; 
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+h2 {
+  color:#00796b;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
