@@ -97,18 +97,53 @@ public class InterfazCli {
         System.out.println("Depósito realizado con éxito.");
     }
 
-    private void retirar(CuentaBancaria cuenta) {
-        System.out.print("Monto a retirar: ");
-        double monto = Double.parseDouble(scanner.nextLine());
-        cuentaBancariaService.retirar(cuenta.getNroCuenta(), monto);
+private void retirar(CuentaBancaria cuenta) {
+        while (true) {
+            try {
+                System.out.print("Monto a retirar (o '0' para cancelar): ");
+                double monto = Double.parseDouble(scanner.nextLine());
+                if (monto == 0) {
+                    System.out.println("Operación cancelada.");
+                    return;
+                }
 
-        CuentaBancaria cuentaActualizada = cuentaBancariaService.buscarCuenta(cuenta.getNroCuenta());
-        cuenta.setCuenta(cuentaActualizada.getCuenta());
-        System.out.println("Retiro realizado con éxito.");
+                cuentaBancariaService.retirar(cuenta.getNroCuenta(), monto);
+
+                CuentaBancaria cuentaActualizada = cuentaBancariaService.buscarCuenta(cuenta.getNroCuenta());
+                cuenta.setCuenta(cuentaActualizada.getCuenta());
+
+                System.out.println("Retiro realizado con éxito.");
+                return; // salir del bucle
+            } catch (Exception e) {
+                System.out.println("Error en el retiro: " + e.getMessage());
+            }
+        }
     }
 
     private void transferir(CuentaBancaria cuentaOrigen) {
-        System.out.print("Nro de cuenta destino: ");
+        while (true) {
+            try {
+                System.out.print("Nro de cuenta destino (o '0' para cancelar): ");
+                Long nroDestino = Long.parseLong(scanner.nextLine());
+                if (nroDestino == 0) {
+                    System.out.println("Transferencia cancelada.");
+                    return;
+                }
+                
+                System.out.print("Monto a transferir: ");
+                double monto = Double.parseDouble(scanner.nextLine());
+                
+                CuentaBancaria cuentaDestino = cuentaBancariaService.buscarCuenta(nroDestino);
+                cuentaBancariaService.transferir(cuentaOrigen, cuentaDestino, monto);
+
+                cuentaOrigen = cuentaBancariaService.buscarCuenta(cuentaOrigen.getNroCuenta());
+                System.out.println("Transferencia realizada con éxito.");
+                return; // salir del bucle
+                } catch (Exception e) {
+                    System.out.println("Error en la transferencia: " + e.getMessage());
+                }
+            }
+        /*System.out.print("Nro de cuenta destino: ");
         Long nroDestino = Long.parseLong(scanner.nextLine());
         System.out.print("Monto a transferir: ");
         double monto = Double.parseDouble(scanner.nextLine());
@@ -119,6 +154,7 @@ public class InterfazCli {
         cuentaOrigen = cuentaBancariaService.buscarCuenta(cuentaOrigen.getNroCuenta());//refrescar la cuenta origen para que el saldo esté actualizado
 
         System.out.println("Transferencia realizada con éxito."); //actualizar referencia
+    */
     }
 
     private void mostrarMovimientos(CuentaBancaria cuenta) {
