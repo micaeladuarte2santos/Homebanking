@@ -28,7 +28,10 @@ public class CuentaBancaria {
 
     /*@Transient
     private Cuenta cuenta;*/
-
+    public CuentaBancaria() {
+        // Constructor vacío requerido por Hibernate
+    }
+    
     public CuentaBancaria(CajaDeAhorro c){
         this.cuenta=c;
     }

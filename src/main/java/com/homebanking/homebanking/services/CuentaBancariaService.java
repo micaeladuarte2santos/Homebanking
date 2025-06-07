@@ -81,6 +81,9 @@ public class CuentaBancariaService {
         }else{
             throw new CuentaInexistenteException(origen.getNroCuenta());
         }
+        
+        cuentaBancariaRepository.save(origen);
+        cuentaBancariaRepository.save(destino);
 
     }
 
