@@ -28,6 +28,7 @@ public class CuentaBancaria {
 
     /*@Transient
     private Cuenta cuenta;*/
+    
     public CuentaBancaria() {
         
     }
@@ -41,7 +42,6 @@ public class CuentaBancaria {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)//Una cuenta tiene muchos movimientos
     //si borro una cuenta, se borran los movimientos de esa cuenta de la bd
     private List<Movimiento> historial = new ArrayList<>();
-
 
 
     public double getSaldo() {
