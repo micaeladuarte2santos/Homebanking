@@ -12,6 +12,7 @@ function verificarDni() {
             return response.json();
         })
         .then(data => {
+            sessionStorage.setItem("dni", dni);// guardo el dni
             mensaje.textContent = "Redirigiendo...";
             mensaje.className = "exito";
             setTimeout(() => {
