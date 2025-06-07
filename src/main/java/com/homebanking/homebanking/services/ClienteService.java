@@ -29,7 +29,7 @@ public class ClienteService {
             throw new DniInexistenteException(dni);
         }
         /*HttpSession session = request.getSession();
-	    session.setAttribute("dni", dni);*/
+	    session.setAttribute("dni", dni);*//////
         return true;
     }
 
