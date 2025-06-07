@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mis Cuentas</title>
+  <title>Cuentas</title>
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/infoCliente.css">
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mx-3"><a class="nav-link" href="infoCliente.html">Inicio</a></li>
       <li class="nav-item mx-3"><a class="nav-link" href="cuentas.html">Ver mis cuentas</a></li>
@@ -20,22 +20,34 @@
     </ul>
   </nav>
 
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">Mis Cuentas</h2>
+  <div class="container mt-4">
+    <h2 class="text-center">Información del Cliente</h2>
+
     <table class="table table-bordered table-striped">
       <thead class="thead-success bg-success text-white">
         <tr>
-          <th>CBU</th>
           <th>DNI</th>
-          <th>Saldo</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo Electrónico</th>
         </tr>
       </thead>
-      <tbody id="tablaCuentas">
-       
+      <tbody>
+        <tr>
+          <td>12345678</td>
+          <td>Juan</td>
+          <td>Pérez</td>
+          <td>juan@mail.com</td>
+        </tr>
       </tbody>
     </table>
   </div>
 
-  <script src="js/cuentas.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </body>
 </html>
+

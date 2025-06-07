@@ -2,13 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mis Cuentas</title>
+  <title>Depositar</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/infoCliente.css">
 </head>
 <body>
-
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mx-3"><a class="nav-link" href="infoCliente.html">Inicio</a></li>
@@ -21,21 +20,25 @@
   </nav>
 
   <div class="container mt-5">
-    <h2 class="text-center mb-4">Mis Cuentas</h2>
-    <table class="table table-bordered table-striped">
-      <thead class="thead-success bg-success text-white">
-        <tr>
-          <th>CBU</th>
-          <th>DNI</th>
-          <th>Saldo</th>
-        </tr>
-      </thead>
-      <tbody id="tablaCuentas">
-       
-      </tbody>
-    </table>
+    <h2 class="text-center mb-4">Realizar un depósito</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nroCuentas">Número de cuenta:</label>
+          <select class="form-control" id="nroCuentas">
+            <option value="" disabled selected>Seleccione una cuenta</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="monto">Monto:</label>
+          <input type="number" class="form-control" id="monto" placeholder="Ingrese el monto." required>
+        </div>
+        <button class="btn btn-success btn-lg w-100" onclick="realizarDeposito()">Depositar</button>
+        <p id="mensaje" class="text-center mt-3"></p>
+      </div>
+    </div>
   </div>
 
-  <script src="js/cuentas.js"></script>
+  <script src="js/depositar.js"></script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+
+nav.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 0;
+  background-color: #353635;
+}
+
+
+body {
+  padding-top: 60px; 
+}
+
+
+nav.navbar .nav-link {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+nav.navbar .nav-link:hover {
+  color: #1b4d22;
+  text-decoration: underline;
+}

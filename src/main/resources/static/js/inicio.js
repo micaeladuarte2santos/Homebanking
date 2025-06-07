@@ -12,10 +12,11 @@ function verificarDni() {
             return response.json();
         })
         .then(data => {
-            mensaje.textContent = "DNI válido. Redirigiendo...";
+            sessionStorage.setItem("dni", dni);// guardo el dni
+            mensaje.textContent = "Redirigiendo...";
             mensaje.className = "exito";
             setTimeout(() => {
-                window.location.href = "/cuentas.html";
+                window.location.href = "/infoCliente.html";
             }, 1500);
         })
         .catch(err => {

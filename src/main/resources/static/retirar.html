@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Retirar</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/infoCliente.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item mx-3"><a class="nav-link" href="infoCliente.html">Inicio</a></li>
+      <li class="nav-item mx-3"><a class="nav-link" href="cuentas.html">Ver mis cuentas</a></li>
+      <li class="nav-item mx-3"><a class="nav-link" href="depositar.html">Depositar</a></li>
+      <li class="nav-item mx-3"><a class="nav-link" href="retirar.html">Retirar</a></li>
+      <li class="nav-item mx-3"><a class="nav-link" href="transferir.html">Transferir</a></li>
+      <li class="nav-item mx-3"><a class="nav-link" href="movimientos.html">Movimientos</a></li>
+    </ul>
+  </nav>
+
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Retirar efectivo</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nroCuentas">Número de cuenta:</label>
+          <select class="form-control" id="nroCuentas">
+            <option value="" disabled selected>--Seleccione una cuenta--</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="monto">Monto:</label>
+          <input type="number" class="form-control" id="monto" placeholder="Ingrese el monto." required />
+        </div>
+        <button class="btn btn-success btn-lg w-100" onclick="realizarRetiro()">Retirar</button>
+        <p id="mensaje" class="text-center mt-3"></p>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/retirar.js"></script>
+</body>
+</html>
