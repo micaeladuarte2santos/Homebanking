@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Transferencias</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+  <style>
+    body {
+      background-color: #f6fff7;
+    }
+    h1 {
+      color: #2e7d32;
+      margin-top: 30px;
+    }
+    .navbar-light .nav-link {
+      color: rgb(0, 0, 0) !important;
+      font-weight: 500;
+    }
+    .navbar {
+      border-radius: 5px;
+    }
+    #mensaje {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+  </style>
+
+
+</head>
+<body>
+
+
+  <!-- Navbar con ítems separados -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item mx-3">
+        <a class="nav-link" href="cuentas.html">Ver mis cuentas</a>
+      </li>
+
+      <li class="nav-item mx-3">
+        <a class="nav-link" href="depositar.html">Depositar</a>
+      </li>
+
+      <li class="nav-item mx-3">
+        <a class="nav-link" href="retirar.html">Retirar</a>
+      </li>
+
+      <li class="nav-item mx-3">
+        <a class="nav-link" href="transferir.html">Transferir</a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- Scripts de Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <body>
+            <div class="container mt-4">
+            <h1 class="text-center">Realizar una transferencia</h1>
+            <div class="row justify-content-center">
+            <div class="col-md-6">
+                <label for="cuentaO">Numero de cuenta origen</label>
+                    <select class="form-control" id="NumCuentaO">
+                        <option value="" disabled selected>Seleccione una cuenta</option>
+                        <option value="12345678">12345678</option>
+                        <option value="87654321">87654321</option>
+                        <option value="11223344">11223344</option>
+                    </select>
+                <div class="form-group">
+                <label for="cuentaD">Número de cuenta a transferir:</label>
+                <input type="text" class="form-control" id="NumCuentaD" placeholder="Ingrese el número de cuenta.">
+                </div>
+                <div class="form-group">
+                <label for="monto">Monto:</label>
+                <input type="number" class="form-control" id="monto" placeholder="Ingrese el monto.">
+                </div>
+                <button class="btn btn-success btn-lg w-100" onclick="realizarDeposito()">Depositar</button>
+                <p id="mensaje" class="text-center"></p>
+            </div>
+            </div>
+        </div>
+    </body>
+
+
+</body>
+</html>

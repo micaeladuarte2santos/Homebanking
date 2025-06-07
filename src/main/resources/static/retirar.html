@@ -7,12 +7,13 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-   <style>
+    <style>
     body {
       background-color: #f6fff7;
     }
-    h2 {
+    h1 {
       color: #2e7d32;
+      margin-top: 30px;
     }
     .navbar-light .nav-link {
       color: rgb(0, 0, 0) !important;
@@ -21,10 +22,16 @@
     .navbar {
       border-radius: 5px;
     }
+    #mensaje {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
   </style>
 
 </head>
 <body>
+
 
   <!-- Navbar con ítems separados -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
@@ -54,31 +61,20 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <div class="container mt-4">
-    <h2 class="text-center">Mis cuentas</h1>
-
-    <table class="table table-bordered table-striped">
-      <thead class="thead-success bg-success text-white">
-        <tr>
-          <th>DNI</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Correo Electrónico</th>
-        </tr>
-      </thead>
-      <tbody>
-    
-        <tr>
-          <td>12345678</td>
-          <td>Juan</td>
-          <td>Pérez</td>
-          <td>juan@mail.com</td>
-        </tr>
-        
-      </tbody>
-    </table>
+<body>
+   <div class="container mt-4">
+    <h1 class="text-center">Retirar efectivo.</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="monto">Monto:</label>
+          <input type="number" id="monto" placeholder="Ingrese el monto.">
+        </div>
+        <button class="btn btn-success btn-lg w-100">Retirar</button>
+        <p id="mensaje" class="text-center"></p>
+      </div>
+    </div>
   </div>
-
 
 
 
