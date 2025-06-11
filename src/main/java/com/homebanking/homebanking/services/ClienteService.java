@@ -29,8 +29,6 @@ public class ClienteService {
         if(clienteRepository.findByDni(dni).isEmpty()){
             throw new DniInexistenteException(dni);
         }
-        /*HttpSession session = request.getSession();
-	    session.setAttribute("dni", dni);*//////
         return true;
     }
 

@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable//para no crear la tabla CajaAhorro en la bd
-@Data//crear los sets y gets 
-@AllArgsConstructor//crea los constructores
+@Embeddable
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class CajaDeAhorro implements Cuenta{
 

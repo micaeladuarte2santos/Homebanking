@@ -45,14 +45,11 @@ public class CuentaBancariaService {
 
     @Transactional
     public void depositar(Long nroCuenta, double monto) {
-        //chequeo si existe la cuenta en la bd, sino lanzo excepcion
         CuentaBancaria cuentaBancaria = buscarCuenta(nroCuenta);
         
-        //obtengo la caja de ahorro de la cuenta bancaria y deposito en ella el monto
         cuentaBancaria.getCuenta().depositar(monto);
-        cuentaBancariaRepository.save(cuentaBancaria);//guardo y actualizo el saldo de la cuenta
+        cuentaBancariaRepository.save(cuentaBancaria);
         
-        //guardo el movimiento de la cuenta bancaria
         Movimiento mov = new Movimiento(nroCuenta,TipoMovimiento.Deposito, monto);
         movimientoRepository.save(mov);
     }
@@ -85,6 +82,11 @@ public class CuentaBancariaService {
         cuentaBancariaRepository.save(origen);
         cuentaBancariaRepository.save(destino);
 
+        Movimiento movO = new Movimiento(origen.getNroCuenta(),TipoMovimiento.Transferencia, -monto);
+        movimientoRepository.save(movO);
+        
+        Movimiento movD = new Movimiento(destino.getNroCuenta(),TipoMovimiento.Transferencia, monto);
+        movimientoRepository.save(movD);
     }
 
     public List<Movimiento> obtenerMovimientosDeCuenta(Long nroCuenta){
@@ -93,32 +95,5 @@ public class CuentaBancariaService {
     }
 
 
-    /*
-     * Scanner scanner = new Scanner(System.in);
-
-// Supongamos que ya buscaste las cuentas del usuario:
-List<Cuenta> cuentas = cuentaService.obtenerCuentasPorUsuario(usuarioId);
-
-// Mostrar las cuentas como un "DDL" de texto:
-System.out.println("Seleccione una cuenta:");
-for (int i = 0; i < cuentas.size(); i++) {
-    Cuenta cuenta = cuentas.get(i);
-    System.out.printf("%d. %s - %s%n", i + 1, cuenta.getTipo(), cuenta.getNumero());
-}
-
-// Leer opción del usuario:
-int opcion = scanner.nextInt();
-scanner.nextLine(); // limpiar buffer
-
-// Validar y obtener la cuenta seleccionada:
-if (opcion < 1 || opcion > cuentas.size()) {
-    System.out.println("Opción inválida.");
-} else {
-    Cuenta cuentaSeleccionada = cuentas.get(opcion - 1);
-    System.out.println("Seleccionó: " + cuentaSeleccionada.getNumero());
-    // Podés seguir con una transferencia, consulta de saldo, etc.
-}
-
-     */
     
 }

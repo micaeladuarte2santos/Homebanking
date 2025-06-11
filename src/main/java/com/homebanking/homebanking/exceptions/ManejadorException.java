@@ -28,5 +28,10 @@ public class ManejadorException {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MontoInvalidoException.class)
+    public ResponseEntity<String> handleMontoInvalidoException(MontoInvalidoException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }

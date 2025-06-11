@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     })
     .catch(() => {
-      selectCuenta.innerHTML = '<option>Error al cargar las cuentas</option>';
+      selectCuenta.innerHTML = '<option>Error al cargar</option>';
     });
 });
 
@@ -47,10 +47,10 @@ function mostrarMovimientos() {
         const fila = document.createElement("tr");
         fila.innerHTML = `
           <td>${m.id}</td>
-          <td>${m.cuenta.nroCuenta}</td>
+          <td>${m.nroCuenta}</td>
           <td>${m.descripcion || ''}</td>
-          <td>${m.monto}</td>
-          <td>${new Date(m.fecha).toLocaleString()}</td>
+          <td>$${m.monto}</td>
+          <td>${new Date(m.fechaMovimiento).toLocaleString()}</td>
         `;
         tabla.appendChild(fila);
       });

@@ -17,17 +17,14 @@ import lombok.Data;
 @Data
 public class CuentaBancaria {
 
-    @Id//clave primaria en al bd
+    @Id
     private Long nroCuenta;
 
-    @ManyToOne//un cliente tiene muchas cuentas bancarias
+    @ManyToOne
     private Cliente cliente;
 
     @Embedded
     private CajaDeAhorro cuenta;
-
-    /*@Transient
-    private Cuenta cuenta;*/
     
     public CuentaBancaria() {
         
@@ -37,10 +34,7 @@ public class CuentaBancaria {
         this.cuenta=c;
     }
 
-    /*public CuentaBancaria() {}*/
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)//Una cuenta tiene muchos movimientos
-    //si borro una cuenta, se borran los movimientos de esa cuenta de la bd
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movimiento> historial = new ArrayList<>();
 
 
