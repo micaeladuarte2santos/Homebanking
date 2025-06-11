@@ -22,20 +22,30 @@
 
   <div class="container mt-5">
     <h2 class="text-center mb-4">Historial de movimientos</h2>
-
-    <div class="form-group">
-      <label for="cuentaSelect">Seleccioná una cuenta:</label>
-      <select id="cuentaSelect" class="form-control mb-3"></select>
-      <button id="btnMostrarMovimientos" class="btn btn-success">Mostrar movimientos</button>
+    <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nroCuentas">Número de cuenta:</label>
+          <select class="form-control" id="cuentaSelect">
+            <option value="" disabled selected>Seleccione una cuenta</option>
+          </select>
+        </div>
+        <button id="btnMostrarMovimientos" class="btn btn-success" onclick="mostrarMovimientos()">Mostrar movimientos</button>
+        <p id="mensaje" class="text-center mt-3"></p>
+      </div>
     </div>
+  </div>
+
 
     <table class="table table-bordered table-striped mt-4">
       <thead class="thead-success bg-success text-white">
         <tr>
           <th>ID</th>
-          <th>Fecha movimiento</th>
-          <th>Monto</th>
           <th>Nro. cuenta</th>
+          <th>Descripcion</th>
+          <th>Monto</th>
+          <th>Fecha movimiento</th>
         </tr>
       </thead>
       <tbody id="tablamovimientos"></tbody>
