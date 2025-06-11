@@ -22,7 +22,14 @@
 
   <div class="container mt-5">
     <h2 class="text-center mb-4">Historial de movimientos</h2>
-    <table class="table table-bordered table-striped">
+
+    <div class="form-group">
+      <label for="cuentaSelect">Seleccioná una cuenta:</label>
+      <select id="cuentaSelect" class="form-control mb-3"></select>
+      <button id="btnMostrarMovimientos" class="btn btn-success">Mostrar movimientos</button>
+    </div>
+
+    <table class="table table-bordered table-striped mt-4">
       <thead class="thead-success bg-success text-white">
         <tr>
           <th>ID</th>
@@ -31,12 +38,9 @@
           <th>Nro. cuenta</th>
         </tr>
       </thead>
-      <tbody id="tablamovimientos">
-       
-      </tbody>
+      <tbody id="tablamovimientos"></tbody>
     </table>
   </div>
 
-  <script src="js/cuentas.js"></script>
 </body>
 </html>
