@@ -141,6 +141,7 @@ private void retirar(CuentaBancaria cuenta) {
 
                 cuentaOrigen = cuentaBancariaService.buscarCuenta(cuentaOrigen.getNroCuenta());
                 System.out.println("Transferencia realizada con éxito.");
+                System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaOrigen.getNroCuenta(), cuentaOrigen.getCuenta().getSaldo());
                 return; // salir del bucle
                 } catch (Exception e) {
                     System.out.println("Error en la transferencia: " + e.getMessage());
