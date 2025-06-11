@@ -95,6 +95,7 @@ public class InterfazCli {
         CuentaBancaria cuentaActualizada = cuentaBancariaService.buscarCuenta(cuenta.getNroCuenta()); //recarga la cuenta desde la base de datos para obtener el saldo actualizado
         cuenta.setCuenta(cuentaActualizada.getCuenta()); //actualiza el saldo en el objeto en memoria (no cambia la referencia, solo los datos)
         System.out.println("Depósito realizado con éxito.");
+        System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
     }
 
 private void retirar(CuentaBancaria cuenta) {
@@ -113,6 +114,8 @@ private void retirar(CuentaBancaria cuenta) {
                 cuenta.setCuenta(cuentaActualizada.getCuenta());
 
                 System.out.println("Retiro realizado con éxito.");
+                System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
+
                 return; // salir del bucle
             } catch (Exception e) {
                 System.out.println("Error en el retiro: " + e.getMessage());
