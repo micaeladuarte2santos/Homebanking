@@ -1,0 +1,59 @@
+@startuml
+
+package controller {
+    class ClienteController {
+        +crearCliente()
+        +consultarCliente()
+    }
+
+    class CuentaBancariaController {
+        +consultarCuenta()
+        +depositar()
+        +extraer()
+        +transferir()
+    }
+}
+
+package service {
+    class CuentaBancariaService {
+        +consultarSaldo()
+        +realizarDeposito()
+        +realizarExtraccion()
+        +realizarTransferencia()
+    }
+
+    class ClienteService{}
+}
+
+package models {
+    class Cliente {}
+    class Operacion{}
+    class CuentaBancaria {}
+    class Movimiento{}
+    class Transferencia{}
+}
+
+package exceptions {
+
+}
+
+package manejador {
+    class ManejadorException {
+        +manejar(Exception)
+    }
+}
+
+' Relaciones
+ClienteController --> Cliente
+CuentaBancariaController --> CuentaBancariaService
+CuentaBancariaService --> CuentaBancaria
+CuentaBancariaService --> Cliente
+service--exceptions
+manejador--exceptions
+
+
+
+CuentaBancariaController --> ManejadorException
+
+
+@enduml
