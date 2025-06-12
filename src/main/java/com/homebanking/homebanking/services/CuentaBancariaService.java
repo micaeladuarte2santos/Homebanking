@@ -45,6 +45,7 @@ public class CuentaBancariaService {
 
     @Transactional
     public void depositar(Long nroCuenta, double monto) {
+
         CuentaBancaria cuentaBancaria = buscarCuenta(nroCuenta);
         
         cuentaBancaria.getCuenta().depositar(monto);

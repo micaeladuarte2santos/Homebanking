@@ -1,11 +1,10 @@
-/*package com.homebanking.homebanking;
+package com.homebanking.homebanking;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
+import com.homebanking.homebanking.exceptions.SaldoInsuficienteException;
 import com.homebanking.homebanking.models.CajaDeAhorro;
-import com.homebanking.homebanking.models.Cuenta;
 import com.homebanking.homebanking.models.CuentaBancaria;
 import com.homebanking.homebanking.models.Transferencia;
 
@@ -19,65 +18,65 @@ class HomebankingApplicationTests {
 	@Test
 	void testDepositar(){
 
-		Cuenta cajaDeAhorro = new CajaDeAhorro();
+		CajaDeAhorro cajaDeAhorro = new CajaDeAhorro();
 		CuentaBancaria cuentaB= new CuentaBancaria(cajaDeAhorro);
 
 		double saldoActual = cuentaB.getSaldo();
 
-		cuentaB.depositar(100);
+		cuentaB.getCuenta().depositar(100.0);
 
-		assertEquals(saldoActual + 100, cuentaB.getSaldo());
+		assertEquals(saldoActual + 100.0, cuentaB.getSaldo());
 	}
 
 	@Test
 	void testRetirar(){
-		Cuenta cajaDeAhorro = new CajaDeAhorro(200);
+		CajaDeAhorro cajaDeAhorro = new CajaDeAhorro(200.0);
 		CuentaBancaria cuentaB= new CuentaBancaria(cajaDeAhorro);
 
 		double saldoActual = cuentaB.getSaldo();
 
-		cuentaB.retirar(100);
+		cuentaB.getCuenta().retirar(100.0);
 
-		assertEquals(saldoActual - 100, cuentaB.getSaldo());
+		assertEquals(saldoActual - 100.0, cuentaB.getSaldo());
 	}
 
 	@Test
 	void testRetirarInvalido(){
-		Cuenta cajaDeAhorro = new CajaDeAhorro(50);
+		CajaDeAhorro cajaDeAhorro = new CajaDeAhorro(50.0);
 		CuentaBancaria cuentaB= new CuentaBancaria(cajaDeAhorro);
 
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> {cuentaB.retirar(100);;});
+		Exception exception = assertThrows(SaldoInsuficienteException.class, () -> {cuentaB.getCuenta().retirar(100.0);;});
 
     	assertEquals("Saldo insuficiente", exception.getMessage());
 	}
 
 	@Test
 	void testTransferencia(){
-		Cuenta cajaDeAhorroOrigen = new CajaDeAhorro(300);
+		CajaDeAhorro cajaDeAhorroOrigen = new CajaDeAhorro(300.0);
 		CuentaBancaria cuentaOrigen= new CuentaBancaria(cajaDeAhorroOrigen);
 
-		Cuenta cajaDeAhorroDestino = new CajaDeAhorro(100);
+		CajaDeAhorro cajaDeAhorroDestino = new CajaDeAhorro(100.0);
 		CuentaBancaria cuentaDestino= new CuentaBancaria(cajaDeAhorroDestino);
 
-		Transferencia transferencia = new Transferencia(cuentaOrigen, cuentaDestino, 200);
+		Transferencia transferencia = new Transferencia(cuentaOrigen, cuentaDestino, 200.0);
 		transferencia.ejecutar();
 
-		assertEquals(300, cuentaDestino.getSaldo());
-		assertEquals(100, cuentaOrigen.getSaldo());
+		assertEquals(300.0, cuentaDestino.getSaldo());
+		assertEquals(100.0, cuentaOrigen.getSaldo());
 	}
 
 	@Test
 	void testTransferenciaInvalida(){
-		Cuenta cajaDeAhorroOrigen = new CajaDeAhorro(100);
+		CajaDeAhorro cajaDeAhorroOrigen = new CajaDeAhorro(100.0);
 		CuentaBancaria cuentaOrigen= new CuentaBancaria(cajaDeAhorroOrigen);
 
-		Cuenta cajaDeAhorroDestino = new CajaDeAhorro(300);
+		CajaDeAhorro cajaDeAhorroDestino = new CajaDeAhorro(300.0);
 		CuentaBancaria cuentaDestino= new CuentaBancaria(cajaDeAhorroDestino);
 
-		Transferencia transferencia = new Transferencia(cuentaOrigen, cuentaDestino, 200);
+		Transferencia transferencia = new Transferencia(cuentaOrigen, cuentaDestino, 200.0);
 
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> {transferencia.ejecutar();});
+		Exception exception = assertThrows(SaldoInsuficienteException.class, () -> {transferencia.ejecutar();});
 
-    	assertEquals("Saldo insuficiente en transferencia", exception.getMessage());
+    	assertEquals("Saldo insuficiente", exception.getMessage());
 	}
-}*/
+}

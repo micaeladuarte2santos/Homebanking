@@ -1,5 +1,8 @@
 package com.homebanking.homebanking.cli;
 
+import com.homebanking.homebanking.exceptions.DniInexistenteException;
+import com.homebanking.homebanking.exceptions.DniInvalidoException;
+import com.homebanking.homebanking.exceptions.MontoInvalidoException;
 import com.homebanking.homebanking.models.CuentaBancaria;
 import com.homebanking.homebanking.models.TipoMovimiento;
 import com.homebanking.homebanking.services.ClienteService;
@@ -26,21 +29,25 @@ public class InterfazCli {
     }
     
     public void iniciar() {
-       try {
-        String dni = solicitarDni();
-        clienteService.existeDni(dni);
+       while(true){
+            try {
+            String dni = solicitarDni();
+            clienteService.existeDni(dni);
 
-        List<CuentaBancaria> cuentas = cuentaBancariaService.encontrarCuentasPorDNI(dni);
-        if (cuentas.isEmpty()) {
-            System.out.println("No tiene cuentas asociadas.");
-            return;
-        }
+            List<CuentaBancaria> cuentas = cuentaBancariaService.encontrarCuentasPorDNI(dni);
+            if (cuentas.isEmpty()) {
+                System.out.println("No tiene cuentas asociadas.");
+                return;
+            }
 
-        CuentaBancaria cuentaSeleccionada = seleccionarCuenta(cuentas);
-        realizarOperaciones(cuentaSeleccionada);
-       } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+            CuentaBancaria cuentaSeleccionada = seleccionarCuenta(cuentas);
+            realizarOperaciones(cuentaSeleccionada);
+        } catch (DniInexistenteException e) {
+                System.out.println(e.getMessage());
+            }catch(DniInvalidoException e){
+                System.out.println(e.getMessage());
+            }
+       }
     }
 
     private String solicitarDni() {
@@ -49,6 +56,7 @@ public class InterfazCli {
     }
 
     private CuentaBancaria seleccionarCuenta(List<CuentaBancaria> cuentas) {
+    while (true) {
         System.out.println("\nSus cuentas:");
         for (int i = 0; i < cuentas.size(); i++) {
             CuentaBancaria c = cuentas.get(i);
@@ -56,9 +64,24 @@ public class InterfazCli {
         }
 
         System.out.print("Seleccione una cuenta: ");
-        int opcion = Integer.parseInt(scanner.nextLine());
-        return cuentas.get(opcion - 1);
+        String input = scanner.nextLine();
+
+        try {
+            int opcion = Integer.parseInt(input);
+
+            if (opcion < 1 || opcion > cuentas.size()) {
+                System.out.println("Opción invalida");
+                continue;
+            }
+
+            return cuentas.get(opcion - 1);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Por favor, ingrese un número válido.");
+        }
     }
+}
+
 
     private void realizarOperaciones(CuentaBancaria cuenta) {
         while (true) {
@@ -87,18 +110,44 @@ public class InterfazCli {
         }
     }
 
-    private void depositar(CuentaBancaria cuenta) {
-        System.out.print("Monto a depositar: ");
-        double monto = Double.parseDouble(scanner.nextLine());
-        cuentaBancariaService.depositar(cuenta.getNroCuenta(), monto);
 
-        CuentaBancaria cuentaActualizada = cuentaBancariaService.buscarCuenta(cuenta.getNroCuenta()); //recarga la cuenta desde la base de datos para obtener el saldo actualizado
-        cuenta.setCuenta(cuentaActualizada.getCuenta()); //actualiza el saldo en el objeto en memoria (no cambia la referencia, solo los datos)
-        System.out.println("Depósito realizado con éxito.");
-        System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
+    private void depositar(CuentaBancaria cuenta) {
+        while (true) {
+            try {
+                System.out.print("Monto a depositar (o '0' para cancelar): ");
+                String montoString = scanner.nextLine();
+
+                if (montoString.equals("0")) {
+                    System.out.println("Operación cancelada.");
+                    return;
+                }
+
+                if (!montoString.matches("\\d+(\\.\\d{1,2})?")) {
+                    throw new MontoInvalidoException();
+                }
+
+                double monto = Double.parseDouble(montoString);
+
+                cuentaBancariaService.depositar(cuenta.getNroCuenta(), monto);
+
+                CuentaBancaria cuentaActualizada = cuentaBancariaService.buscarCuenta(cuenta.getNroCuenta());
+                cuenta.setCuenta(cuentaActualizada.getCuenta());
+
+                System.out.println("Depósito realizado con éxito.");
+                System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n",
+                        cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
+
+                return;
+
+            } catch (MontoInvalidoException e) {
+                System.out.println(e.getMessage());
+            }catch (NumberFormatException e) {
+                System.out.println("Por favor, ingrese un monto valido");
+            }
+        }
     }
 
-private void retirar(CuentaBancaria cuenta) {
+    private void retirar(CuentaBancaria cuenta) {
         while (true) {
             try {
                 System.out.print("Monto a retirar (o '0' para cancelar): ");
@@ -117,8 +166,10 @@ private void retirar(CuentaBancaria cuenta) {
                 System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
 
                 return; // salir del bucle
-            } catch (Exception e) {
-                System.out.println("Error en el retiro: " + e.getMessage());
+            } catch (MontoInvalidoException e) {
+                System.out.println(e.getMessage());
+            }catch (NumberFormatException e) {
+                System.out.println("Por favor, ingrese un monto valido");
             }
         }
     }
@@ -143,22 +194,12 @@ private void retirar(CuentaBancaria cuenta) {
                 System.out.println("Transferencia realizada con éxito.");
                 System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaOrigen.getNroCuenta(), cuentaOrigen.getCuenta().getSaldo());
                 return; // salir del bucle
-                } catch (Exception e) {
-                    System.out.println("Error en la transferencia: " + e.getMessage());
+                } catch (MontoInvalidoException e) {
+                    System.out.println(e.getMessage());
+                }catch (NumberFormatException e) {
+                    System.out.println("Por favor, ingrese un monto valido");
                 }
             }
-        /*System.out.print("Nro de cuenta destino: ");
-        Long nroDestino = Long.parseLong(scanner.nextLine());
-        System.out.print("Monto a transferir: ");
-        double monto = Double.parseDouble(scanner.nextLine());
-
-        CuentaBancaria cuentaDestino = cuentaBancariaService.buscarCuenta(nroDestino);
-        cuentaBancariaService.transferir(cuentaOrigen, cuentaDestino, monto);
-
-        cuentaOrigen = cuentaBancariaService.buscarCuenta(cuentaOrigen.getNroCuenta());//refrescar la cuenta origen para que el saldo esté actualizado
-
-        System.out.println("Transferencia realizada con éxito."); //actualizar referencia
-    */
     }
 
     private void mostrarMovimientos(CuentaBancaria cuenta) {
