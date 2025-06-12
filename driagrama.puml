@@ -11,26 +11,74 @@ package controller {
         +depositar()
         +extraer()
         +transferir()
+        +encontrarCuentas()
     }
 }
 
 package service {
     class CuentaBancariaService {
-        +consultarSaldo()
-        +realizarDeposito()
-        +realizarExtraccion()
-        +realizarTransferencia()
+        +consultarMovimientos()
+
+        +depositar()
+        +retirar()
+        +transferir()
     }
 
-    class ClienteService{}
+    class ClienteService{
+        Cliente ObtenerClientePorDNI()
+        boolean validarDNI()
+    }
 }
 
 package models {
-    class Cliente {}
-    class Operacion{}
-    class CuentaBancaria {}
-    class Movimiento{}
-    class Transferencia{}
+    package interfaces{
+
+        interface Operacion{
+            +void ejecutar()
+        }
+        interface Cuenta{
+            +void depositar(Double monto)
+            +void retirar(Double monto)
+            +Double consultarSaldo()
+        }
+
+    }
+    class CajadeAhorro{
+        double saldo
+        +void depositar(Double monto)
+        +void retirar(Double monto)
+        +Double consultarSaldo()
+    }
+    class Cliente {
+        String dni
+        String nombre
+    }
+    class CuentaBancaria {
+        long nroCuenta
+        Cliente cliente
+        CajadeAhorro caja
+    }
+    class Movimiento{
+        long id
+        Long nroCuenta
+        TipoMovimiento descripcion
+        double monto
+        LocalDateTime fechaMovimiento
+    }
+    class Transferencia{
+        +void Transferencia(origen, destino, monto)
+        +void ejecutar()
+    }
+
+    
+CajadeAhorro ..|> interfaces.Cuenta
+Transferencia ..|> interfaces.Operacion
+}
+
+package UI {
+    interface Web {}
+
+    interface CLI {}
 }
 
 package exceptions {
@@ -50,7 +98,7 @@ CuentaBancariaService --> CuentaBancaria
 CuentaBancariaService --> Cliente
 service--exceptions
 manejador--exceptions
-
+UI -- controller
 
 
 CuentaBancariaController --> ManejadorException
