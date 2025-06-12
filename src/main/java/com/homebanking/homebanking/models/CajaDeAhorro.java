@@ -26,6 +26,10 @@ public class CajaDeAhorro implements Cuenta{
 
     @Override
     public void retirar(Double monto) {
+        if (monto <= 0) {
+            throw new MontoInvalidoException();
+        }
+
         if (monto <= this.getSaldo()) {
             this.setSaldo(this.getSaldo() - monto);
         } else {
