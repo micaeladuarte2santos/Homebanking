@@ -116,16 +116,13 @@ public class InterfazCli {
             try {
                 System.out.print("Monto a depositar (o '0' para cancelar): ");
                 String montoString = scanner.nextLine();
-
+                
                 if (montoString.equals("0")) {
                     System.out.println("Operación cancelada.");
                     return;
                 }
-
-                if (!montoString.matches("\\d+(\\.\\d{1,2})?")) {
-                    throw new MontoInvalidoException();
-                }
-
+                
+                
                 double monto = Double.parseDouble(montoString);
 
                 cuentaBancariaService.depositar(cuenta.getNroCuenta(), monto);
