@@ -68,17 +68,11 @@ public class CuentaBancariaService {
 
     @Transactional
     public void transferir(CuentaBancaria origen, CuentaBancaria destino, double monto) {
+        buscarCuenta(origen.getNroCuenta());
+        buscarCuenta(destino.getNroCuenta());
 
-        if(cuentaBancariaRepository.existsById(origen.getNroCuenta())){
-            if(cuentaBancariaRepository.existsById(destino.getNroCuenta())){
-                Transferencia transferencia = new Transferencia(origen, destino, monto);
-                transferencia.ejecutar();
-            }else{
-                throw new CuentaInexistenteException(destino.getNroCuenta());
-            }
-        }else{
-            throw new CuentaInexistenteException(origen.getNroCuenta());
-        }
+        Transferencia transferencia = new Transferencia(origen, destino, monto);
+        transferencia.ejecutar();
         
         cuentaBancariaRepository.save(origen);
         cuentaBancariaRepository.save(destino);
