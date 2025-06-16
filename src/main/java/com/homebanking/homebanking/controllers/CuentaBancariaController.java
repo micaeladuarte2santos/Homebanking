@@ -3,7 +3,6 @@ package com.homebanking.homebanking.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,12 +49,12 @@ public class CuentaBancariaController implements InterfazOperaciones {
     }
 
     @PostMapping("/transferir")
-    public void transferir(@RequestParam Long nroCuentaOrigen, @RequestParam Long nroCuentaDestino, @RequestParam double monto) {
+    public CuentaBancaria transferir(@RequestParam Long nroCuentaOrigen, @RequestParam Long nroCuentaDestino, @RequestParam double monto) {
 
         CuentaBancaria origen = cuentaService.buscarCuenta(nroCuentaOrigen);
         CuentaBancaria destino = cuentaService.buscarCuenta(nroCuentaDestino);
 
-        cuentaService.transferir(origen, destino, monto);
+        return cuentaService.transferir(origen, destino, monto);
 
     }
 

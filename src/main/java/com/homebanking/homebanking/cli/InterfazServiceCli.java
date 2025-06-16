@@ -28,19 +28,12 @@ public class InterfazServiceCli implements InterfazOperaciones{
     @Autowired
     private CuentaBancariaService cuentaBancariaService;
 
-    private final Scanner scanner = new Scanner(System.in);
-    @Autowired
-    public InterfazServiceCli(CuentaBancariaService cuentaBancariaService) {
-    this.cuentaBancariaService = cuentaBancariaService;
-}
-
 
     public List<CuentaBancaria> obtenerCuentasPorDni(String dni){
         return cuentaBancariaService.encontrarCuentasPorDNI(dni);
     }
 
     public CuentaBancaria getCuentaBancaria(Long nroCuenta){
-
         return cuentaBancariaService.buscarCuenta(nroCuenta);
     }
 
@@ -56,12 +49,12 @@ public class InterfazServiceCli implements InterfazOperaciones{
     }
 
 
-    public void transferir(Long nroCuentaOrigen, Long nroCuentaDestino, double monto) {
+    public CuentaBancaria transferir(Long nroCuentaOrigen, Long nroCuentaDestino, double monto) {
 
         CuentaBancaria cuentaOrigen = getCuentaBancaria(nroCuentaOrigen);
         CuentaBancaria cuentaDestino = getCuentaBancaria(nroCuentaDestino);
 
-        cuentaBancariaService.transferir(cuentaOrigen, cuentaDestino, monto);
+        return cuentaBancariaService.transferir(cuentaOrigen, cuentaDestino, monto);
 
     }
 

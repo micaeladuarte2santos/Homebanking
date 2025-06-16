@@ -71,7 +71,7 @@ public class CuentaBancariaService {
     }
 
     @Transactional
-    public void transferir(CuentaBancaria origen, CuentaBancaria destino, double monto) {
+    public CuentaBancaria transferir(CuentaBancaria origen, CuentaBancaria destino, double monto) {
         buscarCuenta(origen.getNroCuenta());
         buscarCuenta(destino.getNroCuenta());
 
@@ -86,6 +86,8 @@ public class CuentaBancariaService {
         
         Movimiento movDestino = new Movimiento(destino.getNroCuenta(),TipoMovimiento.Transferencia, monto);
         movimientoRepository.save(movDestino);
+
+        return origen;
     }
 
     public List<Movimiento> obtenerMovimientosDeCuenta(Long nroCuenta){

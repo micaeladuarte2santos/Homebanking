@@ -32,9 +32,10 @@ public class TransfenciaCli {
                 System.out.print("Monto a transferir: ");
                 double monto = Double.parseDouble(scanner.nextLine());
                 
+                interfazServiceCli.getCuentaBancaria(nroCuentaDestino);
                 interfazServiceCli.transferir(cuentaOrigen.getNroCuenta(), nroCuentaDestino, monto);
 
-
+                interfazServiceCli.getCuentaBancaria(cuentaOrigen.getNroCuenta());
                 System.out.println("Transferencia realizada con éxito.");
                 System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaOrigen.getNroCuenta(), cuentaOrigen.getSaldo());
                 return; // salir del bucle

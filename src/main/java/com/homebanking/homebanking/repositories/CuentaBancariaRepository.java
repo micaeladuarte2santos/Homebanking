@@ -14,5 +14,4 @@ public interface CuentaBancariaRepository extends CrudRepository<CuentaBancaria,
     @Query("SELECT c FROM CuentaBancaria c WHERE c.cliente.dni =?1")
     public List<CuentaBancaria> cuentasPorDni(String dni);
 
-
 }
