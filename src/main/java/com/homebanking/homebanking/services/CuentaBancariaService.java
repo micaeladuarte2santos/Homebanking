@@ -93,9 +93,6 @@ public class CuentaBancariaService {
         return movimientoRepository.findMovimientosByNroCuenta(nroCuenta);
     }
 
-    public double obtenerSaldo(Long nroCuenta){
-        return cuentaBancariaRepository.getSaldoByNroCuenta(nroCuenta);
-    }
     
 
     

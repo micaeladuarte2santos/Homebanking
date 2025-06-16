@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.homebanking.homebanking.exceptions.MontoInvalidoException;
 import com.homebanking.homebanking.models.CuentaBancaria;
 
+import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
+
+@Component
+@Profile("cli")
 public class RetirosCli {
 
     private final Scanner scanner = new Scanner(System.in);

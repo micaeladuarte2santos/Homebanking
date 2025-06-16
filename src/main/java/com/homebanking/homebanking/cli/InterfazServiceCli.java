@@ -20,6 +20,8 @@ import java.util.Scanner;
 import com.homebanking.homebanking.InterfazOperacionesUsuarios.InterfazOperaciones;
 
 
+@Component
+@Profile("cli")
 public class InterfazServiceCli implements InterfazOperaciones{
 
 

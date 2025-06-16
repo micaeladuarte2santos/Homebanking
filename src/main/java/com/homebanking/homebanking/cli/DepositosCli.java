@@ -4,7 +4,11 @@ import java.util.Scanner;
 
 import com.homebanking.homebanking.exceptions.MontoInvalidoException;
 import com.homebanking.homebanking.models.CuentaBancaria;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
+@Component
+@Profile("cli")
 public class DepositosCli {
 
     private final Scanner scanner = new Scanner(System.in);
