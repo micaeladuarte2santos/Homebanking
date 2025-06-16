@@ -36,7 +36,7 @@ public class MenuCli {
     private MovimientosCli movimientos;
 
     @Autowired
-    private TransfenciaCli tranferencias;
+    private TransfenciaCli transferencias;
 
     @Autowired
     private RetirosCli retiros;
@@ -56,7 +56,7 @@ public class MenuCli {
     public void iniciar() {
        while(true){
             try {
-            String dni = cli.solicitarDni();
+            String dni = solicitarDni();
             clienteService.existeDni(dni);
 
             List<CuentaBancaria> cuentas = cli.obtenerCuentasPorDni(dni);
@@ -120,10 +120,10 @@ public class MenuCli {
 
             switch (operacion) {
                 case "1" -> mostrarSaldo(cuenta);
-                case "2" -> despositos.depositar(cuenta.getNroCuenta());
+                case "2" -> depositos.depositar(cuenta.getNroCuenta());
                 case "3" -> retiros.retirar(cuenta.getNroCuenta());
                 case "4" -> transferencias.transferir(cuenta);
-                case "5" -> movimientosCli.mostrarMovimientos(cuenta.getNroCuenta());
+                case "5" -> movimientos.mostrarMovimientos(cuenta.getNroCuenta());
                 case "0" -> {
                     System.out.println("Saliendo...");
                     return; 

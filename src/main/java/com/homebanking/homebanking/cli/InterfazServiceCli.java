@@ -13,18 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.Scanner;
 
 import com.homebanking.homebanking.InterfazOperacionesUsuarios.InterfazOperaciones;
 
-@Component
-@Profile("cli")
+
 public class InterfazServiceCli implements InterfazOperaciones{
 
-    @Autowired
-    private ClienteService clienteService;
 
     @Autowired
     private CuentaBancariaService cuentaBancariaService;
