@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.homebanking.homebanking.InterfazOperacionesUsuarios.InterfazOperaciones;
 import com.homebanking.homebanking.models.CuentaBancaria;
 import com.homebanking.homebanking.models.Movimiento;
 import com.homebanking.homebanking.services.CuentaBancariaService;
@@ -19,15 +21,15 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/cuentas-bancarias")
 @RequiredArgsConstructor
-public class CuentaBancariaController {
+public class CuentaBancariaController implements InterfazOperaciones {
 
     @Autowired
     private CuentaBancariaService cuentaService;
 
     @GetMapping("/{nroCuenta}")
-    public ResponseEntity<CuentaBancaria> getCuentaBancaria(@PathVariable Long nroCuenta) {
+    public CuentaBancaria getCuentaBancaria(@PathVariable Long nroCuenta) {
         CuentaBancaria cuenta = cuentaService.buscarCuenta(nroCuenta);
-        return ResponseEntity.ok(cuenta);
+        return cuenta;
     }
 
 
@@ -37,26 +39,24 @@ public class CuentaBancariaController {
     }
 
     @PostMapping("/depositar")
-    public ResponseEntity<?> depositar(@RequestParam Long nroCuenta, @RequestParam double monto) {
+    public void depositar(@RequestParam Long nroCuenta, @RequestParam double monto) {
         cuentaService.depositar(nroCuenta, monto);
-        return ResponseEntity.ok().build();
+        
     }
 
     @PostMapping("/retirar")
-    public ResponseEntity<?> retirar(@RequestParam Long nroCuenta, @RequestParam double monto) {
+    public void retirar(@RequestParam Long nroCuenta, @RequestParam double monto) {
         cuentaService.retirar(nroCuenta, monto);
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/transferir")
-    public ResponseEntity<Void> transferir(@RequestParam Long nroCuentaOrigen, @RequestParam Long nroCuentaDestino, @RequestParam double monto) {
+    public void transferir(@RequestParam Long nroCuentaOrigen, @RequestParam Long nroCuentaDestino, @RequestParam double monto) {
 
         CuentaBancaria origen = cuentaService.buscarCuenta(nroCuentaOrigen);
         CuentaBancaria destino = cuentaService.buscarCuenta(nroCuentaDestino);
 
         cuentaService.transferir(origen, destino, monto);
 
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{nroCuenta}/movimientos")

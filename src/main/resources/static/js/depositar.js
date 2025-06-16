@@ -23,6 +23,7 @@ function realizarDeposito() {
   const monto = document.getElementById("monto").value;
   const mensaje = document.getElementById("mensaje");
 
+
   fetch(`http://localhost:8080/cuentas-bancarias/depositar?nroCuenta=${nroCuenta}&monto=${monto}`, {
     method: "POST"
   })

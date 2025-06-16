@@ -77,11 +77,11 @@ public class CuentaBancariaService {
         cuentaBancariaRepository.save(origen);
         cuentaBancariaRepository.save(destino);
 
-        Movimiento movO = new Movimiento(origen.getNroCuenta(),TipoMovimiento.Transferencia, -monto);
-        movimientoRepository.save(movO);
+        Movimiento movOrigen = new Movimiento(origen.getNroCuenta(),TipoMovimiento.Transferencia, -monto);
+        movimientoRepository.save(movOrigen);
         
-        Movimiento movD = new Movimiento(destino.getNroCuenta(),TipoMovimiento.Transferencia, monto);
-        movimientoRepository.save(movD);
+        Movimiento movDestino = new Movimiento(destino.getNroCuenta(),TipoMovimiento.Transferencia, monto);
+        movimientoRepository.save(movDestino);
     }
 
     public List<Movimiento> obtenerMovimientosDeCuenta(Long nroCuenta){

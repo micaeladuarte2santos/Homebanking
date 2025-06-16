@@ -1,41 +1,21 @@
 package com.homebanking.homebanking.cli;
 
-import com.homebanking.homebanking.exceptions.DniInexistenteException;
-import com.homebanking.homebanking.exceptions.DniInvalidoException;
-import com.homebanking.homebanking.exceptions.MontoInvalidoException;
-import com.homebanking.homebanking.models.CuentaBancaria;
-import com.homebanking.homebanking.models.TipoMovimiento;
-import com.homebanking.homebanking.services.ClienteService;
-import com.homebanking.homebanking.services.CuentaBancariaService;
-
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Scanner;
 
-import com.homebanking.homebanking.InterfazOperacionesUsuarios.InterfazOperaciones;
+import com.homebanking.homebanking.exceptions.MontoInvalidoException;
+import com.homebanking.homebanking.models.CuentaBancaria;
 
-@Component
-@Profile("cli")
-public class InterfazCli implements InterfazOperaciones{
-
-    private final ClienteService clienteService;
-    private final CuentaBancariaService cuentaBancariaService;
-    private final Scanner scanner = new Scanner(System.in);
-
-    public InterfazCli(ClienteService clienteService, CuentaBancariaService cuentaBancariaService) {
-        this.clienteService = clienteService;
-        this.cuentaBancariaService = cuentaBancariaService;
+public class AuxCli {
+    public List<CuentaBancaria> obtenerCuentasPorDni(String dni){
+        return cuentaBancariaService.encontrarCuentasPorDNI(dni);
     }
 
-    public String solicitarDni() {
-        System.out.print("Ingrese su DNI: ");
-        return scanner.nextLine();
+    public CuentaBancaria getCuentaBancaria(Long nroCuenta){
+
+        return cuentaBancariaService.buscarCuenta(nroCuenta);
     }
-    
-    
+
     private void depositar(CuentaBancaria cuenta) {
         while (true) {
             try {
@@ -96,11 +76,6 @@ public class InterfazCli implements InterfazOperaciones{
         }
     }
 
-    public CuentaBancaria getCuentaBancaria(Long nroCuenta){
-
-        return cuentaBancariaService.buscarCuenta(nroCuenta);
-    }
-
     private void transferir(CuentaBancaria cuentaOrigen) {
         while (true) {
             try {
@@ -146,28 +121,6 @@ public class InterfazCli implements InterfazOperaciones{
             System.out.printf("%s - %s de $%.2f\n", fechaFormateada, descripcionLegible, monto);
         }
         }
-    }
-
-    public List<CuentaBancaria> obtenerCuentasPorDni(String dni){
-        return cuentaBancariaService.encontrarCuentasPorDNI(dni);
-    }
-
-
-    private String obtenerDescripcionLegible(TipoMovimiento tipo) {
-        switch (tipo) {
-            case Deposito:
-                return "Depósito";
-            case Retiro:
-                return "Retiro";
-            case Transferencia:
-                return "Transferencia";
-            default:
-                return tipo.name();
-        }
-    }
-
-    private void mostrarSaldo(CuentaBancaria cuenta) {
-        System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
     }
 
 }
