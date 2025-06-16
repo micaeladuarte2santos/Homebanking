@@ -30,12 +30,16 @@ public class InterfazCli implements InterfazOperaciones{
         this.cuentaBancariaService = cuentaBancariaService;
     }
 
-    public String solicitarDni() {
-        System.out.print("Ingrese su DNI: ");
-        return scanner.nextLine();
+
+    public List<CuentaBancaria> obtenerCuentasPorDni(String dni){
+        return cuentaBancariaService.encontrarCuentasPorDNI(dni);
     }
-    
-    
+
+    public CuentaBancaria getCuentaBancaria(Long nroCuenta){
+
+        return cuentaBancariaService.buscarCuenta(nroCuenta);
+    }
+
     private void depositar(CuentaBancaria cuenta) {
         while (true) {
             try {
@@ -96,11 +100,6 @@ public class InterfazCli implements InterfazOperaciones{
         }
     }
 
-    public CuentaBancaria getCuentaBancaria(Long nroCuenta){
-
-        return cuentaBancariaService.buscarCuenta(nroCuenta);
-    }
-
     private void transferir(CuentaBancaria cuentaOrigen) {
         while (true) {
             try {
@@ -140,7 +139,7 @@ public class InterfazCli implements InterfazOperaciones{
 
         for (var mov : movimientos) {
             String fechaFormateada = mov.getFechaMovimiento().format(formatter);
-            String descripcionLegible = obtenerDescripcionLegible(mov.getDescripcion());
+            String descripcionLegible = mov.getDescripcion().name();
             double monto = mov.getMonto();
 
             System.out.printf("%s - %s de $%.2f\n", fechaFormateada, descripcionLegible, monto);
@@ -148,26 +147,6 @@ public class InterfazCli implements InterfazOperaciones{
         }
     }
 
-    public List<CuentaBancaria> obtenerCuentasPorDni(String dni){
-        return cuentaBancariaService.encontrarCuentasPorDNI(dni);
-    }
 
-
-    private String obtenerDescripcionLegible(TipoMovimiento tipo) {
-        switch (tipo) {
-            case Deposito:
-                return "Depósito";
-            case Retiro:
-                return "Retiro";
-            case Transferencia:
-                return "Transferencia";
-            default:
-                return tipo.name();
-        }
-    }
-
-    private void mostrarSaldo(CuentaBancaria cuenta) {
-        System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
-    }
 
 }

@@ -84,6 +84,10 @@ public class MenuCli {
     }
     }
 
+    private void mostrarSaldo(CuentaBancaria cuenta) {
+        System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
+    }
+
     private void realizarOperaciones(CuentaBancaria cuenta) {
         while (true) {
             System.out.println("\nOperaciones disponibles:");
