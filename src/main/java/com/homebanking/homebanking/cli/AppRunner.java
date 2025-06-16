@@ -3,7 +3,6 @@ package com.homebanking.homebanking.cli;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import com.homebanking.homebanking.cli.MenuCli;
 
 @Component
 @Profile("cli")

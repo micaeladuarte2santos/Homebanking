@@ -1,14 +1,10 @@
 package com.homebanking.homebanking.cli;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-
-import com.homebanking.homebanking.models.Movimiento;
 import org.springframework.stereotype.Component;
-import org.springframework.context.annotation.Profile;
+
 
 @Component
 @Profile("cli")

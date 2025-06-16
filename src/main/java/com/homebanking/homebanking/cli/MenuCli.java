@@ -2,21 +2,13 @@ package com.homebanking.homebanking.cli;
 
 import java.util.List;
 import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
 import com.homebanking.homebanking.exceptions.DniInexistenteException;
 import com.homebanking.homebanking.exceptions.DniInvalidoException;
 import com.homebanking.homebanking.models.CuentaBancaria;
 import com.homebanking.homebanking.services.ClienteService;
-import com.homebanking.homebanking.services.CuentaBancariaService;
-import com.homebanking.homebanking.cli.InterfazServiceCli;
-import com.homebanking.homebanking.cli.DepositosCli;
-import com.homebanking.homebanking.cli.MovimientosCli;
-import com.homebanking.homebanking.cli.TransfenciaCli;
-import com.homebanking.homebanking.cli.RetirosCli;
 
 
 @Component
@@ -26,8 +18,6 @@ public class MenuCli {
     @Autowired
     private ClienteService clienteService;
 
-    @Autowired
-    private CuentaBancariaService cuentaBancariaService;
 
     @Autowired
     private InterfazServiceCli cli;

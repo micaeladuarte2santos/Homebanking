@@ -1,21 +1,14 @@
 package com.homebanking.homebanking.cli;
 
-import com.homebanking.homebanking.exceptions.DniInexistenteException;
-import com.homebanking.homebanking.exceptions.DniInvalidoException;
-import com.homebanking.homebanking.exceptions.MontoInvalidoException;
+
 import com.homebanking.homebanking.models.CuentaBancaria;
-import com.homebanking.homebanking.models.TipoMovimiento;
-import com.homebanking.homebanking.services.ClienteService;
 import com.homebanking.homebanking.services.CuentaBancariaService;
 import com.homebanking.homebanking.models.Movimiento;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
-
 import java.util.List;
-import java.util.Scanner;
+
 
 import com.homebanking.homebanking.InterfazOperacionesUsuarios.InterfazOperaciones;
 

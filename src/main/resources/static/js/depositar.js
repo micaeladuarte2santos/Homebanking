@@ -23,6 +23,11 @@ function realizarDeposito() {
   const monto = document.getElementById("monto").value;
   const mensaje = document.getElementById("mensaje");
 
+  if (!nroCuenta) {
+      mensaje.textContent = "Por favor, seleccione una cuenta.";
+      mensaje.className = "text-danger";
+      return;
+  }
 
   fetch(`http://localhost:8080/cuentas-bancarias/depositar?nroCuenta=${nroCuenta}&monto=${monto}`, {
     method: "POST"

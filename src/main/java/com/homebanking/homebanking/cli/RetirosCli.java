@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.homebanking.homebanking.exceptions.MontoInvalidoException;
+import com.homebanking.homebanking.exceptions.SaldoInsuficienteException;
 import com.homebanking.homebanking.models.CuentaBancaria;
 
 import org.springframework.stereotype.Component;
@@ -41,6 +42,8 @@ public class RetirosCli {
                 System.out.println(e.getMessage());
             }catch (NumberFormatException e) {
                 System.out.println("Por favor, ingrese un monto valido");
+            }catch(SaldoInsuficienteException e){
+                    System.out.println(e.getMessage());
             }
         }
     }

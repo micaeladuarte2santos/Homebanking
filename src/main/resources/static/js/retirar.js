@@ -31,6 +31,12 @@ function realizarRetiro() {
   const nroCuenta = document.getElementById("nroCuentas").value;
   const monto = document.getElementById("monto").value;
 
+  if (!nroCuenta) {
+      mensaje.textContent = "Por favor, seleccione una cuenta.";
+      mensaje.className = "text-danger";
+      return;
+  }
+
   fetch(`http://localhost:8080/cuentas-bancarias/retirar?nroCuenta=${nroCuenta}&monto=${monto}`, {
     method: "POST"
   })
