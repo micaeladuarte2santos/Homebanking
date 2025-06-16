@@ -16,6 +16,8 @@ public class RetirosCli {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    @Autowired
+    private InterfazServiceCli interfazServiceCli;
     
     public void retirar(Long nroCuenta) {
 
@@ -29,7 +31,7 @@ public class RetirosCli {
                     return;
                 }
 
-                CuentaBancaria cuentaOrigen = InterfazServiceCli.getInstancia().retirar(nroCuenta, montoARetirar);
+                CuentaBancaria cuentaOrigen = interfazServiceCli.retirar(nroCuenta, montoARetirar);
 
                 System.out.println("Retiro realizado con éxito.");
                 System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", nroCuenta, cuentaOrigen.getCuenta().getSaldo());

@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import com.homebanking.homebanking.exceptions.MontoInvalidoException;
 import com.homebanking.homebanking.models.CuentaBancaria;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,13 @@ import org.springframework.stereotype.Component;
 public class DepositosCli {
 
     private final Scanner scanner = new Scanner(System.in);
+
+    @Autowired
+    private InterfazServiceCli interfazServiceCli;
+
+    public DepositosCli() {
+        this.interfazServiceCli = null;
+    }
     
     public void depositar(Long nroCuenta) {
         while (true) {
@@ -26,7 +35,7 @@ public class DepositosCli {
                 
                 
 
-                CuentaBancaria cuentaOrigen = InterfazServiceCli.getInstancia().depositar(nroCuenta, montoADepositar);
+                CuentaBancaria cuentaOrigen = interfazServiceCli.depositar(nroCuenta, montoADepositar);
 
                 System.out.println("Depósito realizado con éxito.");
                 System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n",

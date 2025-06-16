@@ -29,15 +29,10 @@ public class InterfazServiceCli implements InterfazOperaciones{
     private CuentaBancariaService cuentaBancariaService;
 
     private final Scanner scanner = new Scanner(System.in);
-    private static InterfazServiceCli instancia;
-
-
-    public static InterfazServiceCli getInstancia() {
-        if (instancia == null) {
-            instancia = new InterfazServiceCli();
-        }
-        return instancia;
-    }
+    @Autowired
+    public InterfazServiceCli(CuentaBancariaService cuentaBancariaService) {
+    this.cuentaBancariaService = cuentaBancariaService;
+}
 
 
     public List<CuentaBancaria> obtenerCuentasPorDni(String dni){

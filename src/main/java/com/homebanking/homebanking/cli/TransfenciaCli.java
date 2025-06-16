@@ -15,7 +15,8 @@ import org.springframework.context.annotation.Profile;
 public class TransfenciaCli {
 
     private final Scanner scanner = new Scanner(System.in);
-
+    @Autowired
+    private InterfazServiceCli interfazServiceCli;
 
     public void transferir(CuentaBancaria cuentaOrigen) {
         while (true) {
@@ -31,7 +32,7 @@ public class TransfenciaCli {
                 System.out.print("Monto a transferir: ");
                 double monto = Double.parseDouble(scanner.nextLine());
                 
-                InterfazServiceCli.getInstancia().transferir(cuentaOrigen.getNroCuenta(), nroCuentaDestino, monto);
+                interfazServiceCli.transferir(cuentaOrigen.getNroCuenta(), nroCuentaDestino, monto);
 
 
                 System.out.println("Transferencia realizada con éxito.");

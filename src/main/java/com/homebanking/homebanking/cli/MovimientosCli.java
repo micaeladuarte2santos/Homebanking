@@ -14,12 +14,13 @@ import org.springframework.context.annotation.Profile;
 @Profile("cli")
 public class MovimientosCli {
 
-    
+    @Autowired
+    private InterfazServiceCli interfazServiceCli;
     
     public void mostrarMovimientos(Long nroCuenta){
 
         System.out.println("\nMovimientos de la cuenta Nº " + nroCuenta);
-        var movimientos = InterfazServiceCli.getInstancia().obtenerMovimientos(nroCuenta);
+        var movimientos = interfazServiceCli.obtenerMovimientos(nroCuenta);
         
         if (movimientos.isEmpty()) {
             System.out.println("No hay movimientos registrados.");
