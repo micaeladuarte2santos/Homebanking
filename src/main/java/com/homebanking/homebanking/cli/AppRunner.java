@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Profile("cli")
 public class AppRunner implements CommandLineRunner {
-    private final InterfazCli interfazCli;
+    private final InterfazServiceCli interfazCli;
 
-    public AppRunner(InterfazCli interfazCli) {
+    public AppRunner(InterfazServiceCli interfazCli) {
         this.interfazCli = interfazCli;
     }
 

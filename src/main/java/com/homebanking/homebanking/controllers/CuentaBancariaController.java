@@ -39,14 +39,14 @@ public class CuentaBancariaController implements InterfazOperaciones {
     }
 
     @PostMapping("/depositar")
-    public void depositar(@RequestParam Long nroCuenta, @RequestParam double monto) {
-        cuentaService.depositar(nroCuenta, monto);
+    public CuentaBancaria depositar(@RequestParam Long nroCuenta, @RequestParam double monto) {
+        return cuentaService.depositar(nroCuenta, monto);
         
     }
 
     @PostMapping("/retirar")
-    public void retirar(@RequestParam Long nroCuenta, @RequestParam double monto) {
-        cuentaService.retirar(nroCuenta, monto);
+    public CuentaBancaria retirar(@RequestParam Long nroCuenta, @RequestParam double monto) {
+        return cuentaService.retirar(nroCuenta, monto);
     }
 
     @PostMapping("/transferir")

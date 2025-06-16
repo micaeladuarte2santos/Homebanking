@@ -3,6 +3,7 @@ package com.homebanking.homebanking.cli;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -11,23 +12,40 @@ import com.homebanking.homebanking.exceptions.DniInvalidoException;
 import com.homebanking.homebanking.models.CuentaBancaria;
 import com.homebanking.homebanking.services.ClienteService;
 import com.homebanking.homebanking.services.CuentaBancariaService;
-import com.homebanking.homebanking.cli.InterfazCli;
+import com.homebanking.homebanking.cli.InterfazServiceCli;
+import com.homebanking.homebanking.cli.DepositosCli;
+import com.homebanking.homebanking.cli.MovimientosCli;
+import com.homebanking.homebanking.cli.TransfenciaCli;
+import com.homebanking.homebanking.cli.RetirosCli;
 
 
 @Component
 @Profile("cli")
 public class MenuCli {
 
-    private final ClienteService clienteService;
-    private final CuentaBancariaService cuentaBancariaService;
-    private final Scanner scanner = new Scanner(System.in);
-    private final InterfazCli cli;
+    @Autowired
+    private ClienteService clienteService;
 
-    public MenuCli(ClienteService clienteService, CuentaBancariaService cuentaBancariaService, InterfazCli cli) {
-        this.clienteService = clienteService;
-        this.cuentaBancariaService = cuentaBancariaService;
-        this.cli = cli;
-    }
+    @Autowired
+    private CuentaBancariaService cuentaBancariaService;
+
+    @Autowired
+    private InterfazServiceCli cli;
+
+    @Autowired
+    private MovimientosCli movimientos;
+
+    @Autowired
+    private TransfenciaCli tranferencias;
+
+    @Autowired
+    private RetirosCli retiros;
+
+    @Autowired
+    private DepositosCli depositos;
+
+    private final Scanner scanner = new Scanner(System.in);
+
 
     private String solicitarDni() {
         System.out.print("Ingrese su DNI: ");
@@ -102,10 +120,10 @@ public class MenuCli {
 
             switch (operacion) {
                 case "1" -> mostrarSaldo(cuenta);
-                case "2" -> depositar(cuenta);
-                case "3" -> retirar(cuenta);
-                case "4" -> transferir(cuenta);
-                case "5" -> mostrarMovimientos(cuenta);
+                case "2" -> despositos.depositar(cuenta.getNroCuenta());
+                case "3" -> retiros.retirar(cuenta.getNroCuenta());
+                case "4" -> transferencias.transferir(cuenta);
+                case "5" -> movimientosCli.mostrarMovimientos(cuenta.getNroCuenta());
                 case "0" -> {
                     System.out.println("Saliendo...");
                     return; 
@@ -114,5 +132,7 @@ public class MenuCli {
             }
         }
     }
+
+    
 
 }

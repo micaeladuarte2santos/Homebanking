@@ -44,7 +44,7 @@ public class CuentaBancariaService {
     }
 
     @Transactional
-    public void depositar(Long nroCuenta, double monto) {
+    public CuentaBancaria depositar(Long nroCuenta, double monto) {
 
         CuentaBancaria cuentaBancaria = buscarCuenta(nroCuenta);
         
@@ -53,10 +53,12 @@ public class CuentaBancariaService {
         
         Movimiento mov = new Movimiento(nroCuenta,TipoMovimiento.Deposito, monto);
         movimientoRepository.save(mov);
+
+        return cuentaBancaria;
     }
 
     @Transactional
-    public void retirar(Long nroCuenta, double monto) {
+    public CuentaBancaria retirar(Long nroCuenta, double monto) {
         CuentaBancaria cuentaBancaria = buscarCuenta(nroCuenta);
 
         cuentaBancaria.getCuenta().retirar(monto);
@@ -64,6 +66,8 @@ public class CuentaBancariaService {
 
         Movimiento mov = new Movimiento(nroCuenta,TipoMovimiento.Retiro, -monto);
         movimientoRepository.save(mov);
+
+        return cuentaBancaria;
     }
 
     @Transactional
@@ -89,6 +93,10 @@ public class CuentaBancariaService {
         return movimientoRepository.findMovimientosByNroCuenta(nroCuenta);
     }
 
+    public double obtenerSaldo(Long nroCuenta){
+        return cuentaBancariaRepository.getSaldoByNroCuenta(nroCuenta);
+    }
+    
 
     
 }
