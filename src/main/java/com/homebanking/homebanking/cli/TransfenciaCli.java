@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.homebanking.homebanking.exceptions.CuentaInexistenteException;
 import com.homebanking.homebanking.exceptions.MontoInvalidoException;
+import com.homebanking.homebanking.exceptions.SaldoInsuficienteException;
 import com.homebanking.homebanking.models.CuentaBancaria;
 
 import org.springframework.stereotype.Component;
@@ -33,16 +35,19 @@ public class TransfenciaCli {
                 double monto = Double.parseDouble(scanner.nextLine());
                 
                 interfazServiceCli.getCuentaBancaria(nroCuentaDestino);
-                interfazServiceCli.transferir(cuentaOrigen.getNroCuenta(), nroCuentaDestino, monto);
+                CuentaBancaria cuentaOrigenActual = interfazServiceCli.transferir(cuentaOrigen.getNroCuenta(), nroCuentaDestino, monto);
 
-                interfazServiceCli.getCuentaBancaria(cuentaOrigen.getNroCuenta());
                 System.out.println("Transferencia realizada con éxito.");
-                System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaOrigen.getNroCuenta(), cuentaOrigen.getSaldo());
+                System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaOrigen.getNroCuenta(), cuentaOrigenActual.getSaldo());
                 return; // salir del bucle
                 } catch (MontoInvalidoException e) {
                     System.out.println(e.getMessage());
                 }catch (NumberFormatException e) {
                     System.out.println("Por favor, ingrese un monto valido");
+                }catch(CuentaInexistenteException e){
+                    System.out.println(e.getMessage());
+                }catch(SaldoInsuficienteException e){
+                    System.out.println(e.getMessage());
                 }
             }
     }
