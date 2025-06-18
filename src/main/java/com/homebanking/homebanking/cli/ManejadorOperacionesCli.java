@@ -15,7 +15,7 @@ import com.homebanking.homebanking.InterfazOperacionesUsuarios.InterfazOperacion
 
 @Component
 @Profile("cli")
-public class InterfazServiceCli implements InterfazOperaciones{
+public class ManejadorOperacionesCli implements InterfazOperaciones{
 
 
     @Autowired
@@ -31,28 +31,22 @@ public class InterfazServiceCli implements InterfazOperaciones{
     }
 
     public CuentaBancaria depositar(Long nroCuenta, double monto) {
-
         return cuentaBancariaService.depositar(nroCuenta, monto);    
-        
     }
 
     public CuentaBancaria retirar(Long nroCuenta, double monto) {
-
         return cuentaBancariaService.retirar(nroCuenta, monto);
     }
 
 
     public CuentaBancaria transferir(Long nroCuentaOrigen, Long nroCuentaDestino, double monto) {
-
         CuentaBancaria cuentaOrigen = getCuentaBancaria(nroCuentaOrigen);
         CuentaBancaria cuentaDestino = getCuentaBancaria(nroCuentaDestino);
-
         return cuentaBancariaService.transferir(cuentaOrigen, cuentaDestino, monto);
 
     }
 
     public List<Movimiento> obtenerMovimientos(Long nroCuenta) {
-
         return cuentaBancariaService.obtenerMovimientosDeCuenta(nroCuenta);
     }
 

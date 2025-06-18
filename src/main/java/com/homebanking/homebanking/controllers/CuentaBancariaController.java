@@ -50,10 +50,8 @@ public class CuentaBancariaController implements InterfazOperaciones {
 
     @PostMapping("/transferir")
     public CuentaBancaria transferir(@RequestParam Long nroCuentaOrigen, @RequestParam Long nroCuentaDestino, @RequestParam double monto) {
-
         CuentaBancaria origen = cuentaService.buscarCuenta(nroCuentaOrigen);
         CuentaBancaria destino = cuentaService.buscarCuenta(nroCuentaDestino);
-
         return cuentaService.transferir(origen, destino, monto);
 
     }

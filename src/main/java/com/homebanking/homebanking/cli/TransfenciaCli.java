@@ -18,28 +18,29 @@ public class TransfenciaCli {
 
     private final Scanner scanner = new Scanner(System.in);
     @Autowired
-    private InterfazServiceCli interfazServiceCli;
+    private ManejadorOperacionesCli manejadorOperacionesCli;
 
     public void transferir(CuentaBancaria cuentaOrigen) {
         while (true) {
             try {
-                System.out.print("Nro de cuenta destino (o '0' para cancelar): ");
-                Long nroCuentaDestino = Long.parseLong(scanner.nextLine());
+                    System.out.print("Nro de cuenta destino (o '0' para cancelar): ");
+                    Long nroCuentaDestino = Long.parseLong(scanner.nextLine());
 
-                if (nroCuentaDestino == 0) {
-                    System.out.println("Transferencia cancelada.");
-                    return;
-                }
-                
-                System.out.print("Monto a transferir: ");
-                double monto = Double.parseDouble(scanner.nextLine());
-                
-                interfazServiceCli.getCuentaBancaria(nroCuentaDestino);
-                CuentaBancaria cuentaOrigenActual = interfazServiceCli.transferir(cuentaOrigen.getNroCuenta(), nroCuentaDestino, monto);
+                    if (nroCuentaDestino == 0) {
+                        System.out.println("Transferencia cancelada.");
+                        return;
+                    }
+                    
+                    System.out.print("Monto a transferir: ");
+                    double monto = Double.parseDouble(scanner.nextLine());
+                    
+                    manejadorOperacionesCli.getCuentaBancaria(nroCuentaDestino);
+                    CuentaBancaria cuentaOrigenActual = manejadorOperacionesCli.transferir(cuentaOrigen.getNroCuenta(), nroCuentaDestino, monto);
 
-                System.out.println("Transferencia realizada con éxito.");
-                System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaOrigen.getNroCuenta(), cuentaOrigenActual.getSaldo());
-                return; // salir del bucle
+                    System.out.println("Transferencia realizada con éxito.");
+                    System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaOrigen.getNroCuenta(), cuentaOrigenActual.getSaldo());
+                    return; // salir del bucle
+                    
                 } catch (MontoInvalidoException e) {
                     System.out.println(e.getMessage());
                 }catch (NumberFormatException e) {

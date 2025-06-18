@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 public class MovimientosCli {
 
     @Autowired
-    private InterfazServiceCli interfazServiceCli;
+    private ManejadorOperacionesCli manejadorOperacionesCli;
     
     public void mostrarMovimientos(Long nroCuenta){
 
         System.out.println("\nMovimientos de la cuenta Nº " + nroCuenta);
-        var movimientos = interfazServiceCli.obtenerMovimientos(nroCuenta);
+        var movimientos = manejadorOperacionesCli.obtenerMovimientos(nroCuenta);
         
         if (movimientos.isEmpty()) {
             System.out.println("No hay movimientos registrados.");

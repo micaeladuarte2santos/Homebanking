@@ -19,7 +19,7 @@ public class MenuCli {
     private ClienteService clienteService;
 
     @Autowired
-    private InterfazServiceCli cli;
+    private ManejadorOperacionesCli manejadorOperacionesCli;
 
     @Autowired
     private MovimientosCli movimientos;
@@ -48,7 +48,7 @@ public class MenuCli {
                 String dni = solicitarDni();
                 clienteService.buscarClientePorDni(dni);
 
-                List<CuentaBancaria> cuentas = cli.obtenerCuentasPorDni(dni);
+                List<CuentaBancaria> cuentas = manejadorOperacionesCli.obtenerCuentasPorDni(dni);
                 if (cuentas.isEmpty()) {
                     System.out.println("No tiene cuentas asociadas.");
                     return;
@@ -92,7 +92,7 @@ public class MenuCli {
     }
 
     private void mostrarSaldo(CuentaBancaria cuenta) {
-        CuentaBancaria cuentaActualizada = cli.getCuentaBancaria(cuenta.getNroCuenta());
+        CuentaBancaria cuentaActualizada = manejadorOperacionesCli.getCuentaBancaria(cuenta.getNroCuenta());
         System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n", cuentaActualizada.getNroCuenta(), cuentaActualizada.getCuenta().getSaldo());
     }
 

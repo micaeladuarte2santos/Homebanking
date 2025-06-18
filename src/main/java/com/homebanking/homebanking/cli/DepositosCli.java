@@ -16,11 +16,11 @@ public class DepositosCli {
     private final Scanner scanner = new Scanner(System.in);
 
     @Autowired
-    private InterfazServiceCli interfazServiceCli;
+    private ManejadorOperacionesCli manejadorOperacionesCli;
 
-    public DepositosCli() {
-        this.interfazServiceCli = null;
-    }
+    /*public DepositosCli() {
+        this.manejadorOperacionesCli = null;
+    }*/
     
     public void depositar(Long nroCuenta) {
         while (true) {
@@ -33,9 +33,7 @@ public class DepositosCli {
                     return;
                 }
                 
-                
-
-                CuentaBancaria cuentaOrigen = interfazServiceCli.depositar(nroCuenta, montoADepositar);
+                CuentaBancaria cuentaOrigen = manejadorOperacionesCli.depositar(nroCuenta, montoADepositar);
 
                 System.out.println("Depósito realizado con éxito.");
                 System.out.printf("Saldo actual de la cuenta Nº %d: $%.2f\n",
