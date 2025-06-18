@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.homebanking.homebanking.exceptions.DniInexistenteException;
 import com.homebanking.homebanking.models.Cliente;
 import com.homebanking.homebanking.repositories.ClienteRepository;
-import com.homebanking.homebanking.validador.ValidarCliente;
+import com.homebanking.homebanking.validador.ValidadorCliente;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -20,11 +20,11 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private ValidarCliente validador;
+    private ValidadorCliente validador;
 
     @Transactional(readOnly = true)
     public Cliente buscarClientePorDni(String dni) {
-        validador.validar(dni);
+        validador.validarDniCliente(dni);
         return clienteRepository.findByDni(dni).orElseThrow(() -> new DniInexistenteException(dni));
     }
 

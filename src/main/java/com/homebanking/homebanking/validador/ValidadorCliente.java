@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import com.homebanking.homebanking.exceptions.DniInvalidoException;
 
 @Component
-public class ValidarCliente {
+public class ValidadorCliente {
 
-    public void validar(String dni) {
+    public void validarDniCliente(String dni) {
 		
 		if(!dni.matches("\\d{8}")) {
 			throw new DniInvalidoException(dni);

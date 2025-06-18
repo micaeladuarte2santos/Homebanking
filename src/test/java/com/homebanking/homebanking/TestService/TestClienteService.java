@@ -18,7 +18,7 @@ import com.homebanking.homebanking.exceptions.DniInvalidoException;
 import com.homebanking.homebanking.models.Cliente;
 import com.homebanking.homebanking.repositories.ClienteRepository;
 import com.homebanking.homebanking.services.ClienteService;
-import com.homebanking.homebanking.validador.ValidarCliente;
+import com.homebanking.homebanking.validador.ValidadorCliente;
 
 public class TestClienteService {
 
@@ -29,7 +29,7 @@ public class TestClienteService {
     private ClienteRepository clienteRepository;
 
     @Mock
-	private ValidarCliente validadorCliente;
+	private ValidadorCliente validadorCliente;
 
     @BeforeEach
 	public void inicializar() {
@@ -65,7 +65,7 @@ public class TestClienteService {
         String dni = "4310166A";
        
         //simula que el validador lanza la excepcion
-        doThrow(new DniInvalidoException(dni)).when(validadorCliente).validar(dni);
+        doThrow(new DniInvalidoException(dni)).when(validadorCliente).validarDniCliente(dni);
 
         assertThrows(DniInvalidoException.class, () -> {
             clienteService.buscarClientePorDni(dni);

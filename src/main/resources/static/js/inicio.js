@@ -2,7 +2,7 @@ function verificarDni() {
     const dni = document.getElementById("dni").value;
     const mensaje = document.getElementById("mensaje");
 
-    fetch(`/clientes/existe/${dni}`)
+    fetch(`/clientes/${dni}`)
         .then(response => {
             if (!response.ok) {
                 return response.text().then(textoError => {

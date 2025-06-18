@@ -45,18 +45,18 @@ public class MenuCli {
     public void iniciar() {
        while(true){
             try {
-            String dni = solicitarDni();
-            clienteService.buscarClientePorDni(dni);
+                String dni = solicitarDni();
+                clienteService.buscarClientePorDni(dni);
 
-            List<CuentaBancaria> cuentas = cli.obtenerCuentasPorDni(dni);
-            if (cuentas.isEmpty()) {
-                System.out.println("No tiene cuentas asociadas.");
-                return;
-            }
+                List<CuentaBancaria> cuentas = cli.obtenerCuentasPorDni(dni);
+                if (cuentas.isEmpty()) {
+                    System.out.println("No tiene cuentas asociadas.");
+                    return;
+                }
 
-            CuentaBancaria cuentaSeleccionada = seleccionarCuenta(cuentas);
-            realizarOperaciones(cuentaSeleccionada);
-        } catch (DniInexistenteException e) {
+                CuentaBancaria cuentaSeleccionada = seleccionarCuenta(cuentas);
+                realizarOperaciones(cuentaSeleccionada);
+            } catch (DniInexistenteException e) {
                 System.out.println(e.getMessage());
             }catch(DniInvalidoException e){
                 System.out.println(e.getMessage());
@@ -66,29 +66,29 @@ public class MenuCli {
 
      private CuentaBancaria seleccionarCuenta(List<CuentaBancaria> cuentas) {
         while (true) {
-        System.out.println("\nSus cuentas:");
+            System.out.println("\nSus cuentas:");
             for (int i = 0; i < cuentas.size(); i++) {
                 CuentaBancaria cuenta = cuentas.get(i);
                 System.out.printf("%d - Cuenta Nº %d - Saldo: $%.2f\n", i + 1, cuenta.getNroCuenta(), cuenta.getCuenta().getSaldo());
             }
 
-        System.out.print("Seleccione una cuenta: ");
-        String input = scanner.nextLine();
+            System.out.print("Seleccione una cuenta: ");
+            String input = scanner.nextLine();
 
-        try {
-            int opcion = Integer.parseInt(input);
+            try {
+                int opcion = Integer.parseInt(input);
 
-            if (opcion < 1 || opcion > cuentas.size()) {
-                System.out.println("Opción invalida");
-                continue;
+                if (opcion < 1 || opcion > cuentas.size()) {
+                    System.out.println("Opción invalida");
+                    continue;
+                }
+
+                return cuentas.get(opcion - 1);
+
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, ingrese un número válido.");
             }
-
-            return cuentas.get(opcion - 1);
-
-        } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Por favor, ingrese un número válido.");
         }
-    }
     }
 
     private void mostrarSaldo(CuentaBancaria cuenta) {
