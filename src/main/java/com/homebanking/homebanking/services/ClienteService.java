@@ -23,17 +23,9 @@ public class ClienteService {
     private ValidarCliente validador;
 
     @Transactional(readOnly = true)
-    public boolean existeDni(String dni){
-
+    public Cliente buscarClientePorDni(String dni) {
         validador.validar(dni);
-        if(clienteRepository.findByDni(dni).isEmpty()){
-            throw new DniInexistenteException(dni);
-        }
-        return true;
-    }
-
-    public Cliente obtenerPorDni(String dni) {
-        return clienteRepository.findById(dni).orElseThrow(() -> new DniInexistenteException(dni));
+        return clienteRepository.findByDni(dni).orElseThrow(() -> new DniInexistenteException(dni));
     }
 
 }

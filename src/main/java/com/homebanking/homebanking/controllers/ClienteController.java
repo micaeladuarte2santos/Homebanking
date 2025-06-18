@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.homebanking.homebanking.exceptions.DniInexistenteException;
 import com.homebanking.homebanking.models.Cliente;
 import com.homebanking.homebanking.services.ClienteService;
 
@@ -22,13 +23,17 @@ public class ClienteController {
 
     @GetMapping("/existe/{dni}")
     public ResponseEntity<?> verificarDni(@PathVariable String dni) {
-        boolean existe = clienteService.existeDni(dni);
-        return ResponseEntity.ok(existe);
+        try {
+            clienteService.buscarClientePorDni(dni);
+            return ResponseEntity.ok(true);
+        } catch (DniInexistenteException e) {
+            return ResponseEntity.ok(false);
+        }
     }
 
     @GetMapping("/{dni}")
     public ResponseEntity<Cliente> obtenerClientePorDni(@PathVariable String dni) {
-        Cliente cliente = clienteService.obtenerPorDni(dni); 
+        Cliente cliente = clienteService.buscarClientePorDni(dni); 
         return ResponseEntity.ok(cliente);
     }
 }

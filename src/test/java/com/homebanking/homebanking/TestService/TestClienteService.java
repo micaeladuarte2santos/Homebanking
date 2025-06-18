@@ -1,7 +1,7 @@
 package com.homebanking.homebanking.TestService;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -29,8 +29,7 @@ public class TestClienteService {
     private ClienteRepository clienteRepository;
 
     @Mock
-	private ValidarCliente validarCliente;
-
+	private ValidarCliente validadorCliente;
 
     @BeforeEach
 	public void inicializar() {
@@ -38,39 +37,39 @@ public class TestClienteService {
 	}
 
     @Test
-    public void testClienteExistenteValido(){
-        String dni="43101667";
+    public void testBuscarClientePorDniExistente() {
+        String dni = "43101667";
         Cliente cliente = new Cliente();
         cliente.setDni(dni);
 
         when(clienteRepository.findByDni(dni)).thenReturn(Optional.of(cliente));
 
-        boolean res = clienteService.existeDni(dni);
+        Cliente resultado = clienteService.buscarClientePorDni(dni);
 
-        assertTrue(res);
+        assertEquals(cliente, resultado);
     }
 
     @Test
-    public void testClienteInexistente(){
-        String dni="43101667";
-        Cliente cliente = new Cliente();
-        cliente.setDni(dni);
+    public void testBuscarClientePorDniInexistente(){
+        String dni = "43101667";
 
         when(clienteRepository.findByDni(dni)).thenReturn(Optional.empty());
 
-        assertThrows(DniInexistenteException.class,()->{clienteService.existeDni(dni);});
+        assertThrows(DniInexistenteException.class,()-> {
+            clienteService.buscarClientePorDni(dni);
+        });
     }
 
     @Test
-    public void testClienteInvalido(){
-        String dni="4310166A";
-        Cliente cliente = new Cliente();
-        cliente.setDni(dni);
-
+    public void testBuscarClientePorDniInvalido(){
+        String dni = "4310166A";
+       
         //simula que el validador lanza la excepcion
-        doThrow(new DniInvalidoException(dni)).when(validarCliente).validar(dni);
+        doThrow(new DniInvalidoException(dni)).when(validadorCliente).validar(dni);
 
-        assertThrows(DniInvalidoException.class, () -> clienteService.existeDni(dni));
+        assertThrows(DniInvalidoException.class, () -> {
+            clienteService.buscarClientePorDni(dni);
+        });
     }
 
 }

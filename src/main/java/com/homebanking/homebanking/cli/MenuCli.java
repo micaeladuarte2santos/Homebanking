@@ -18,7 +18,6 @@ public class MenuCli {
     @Autowired
     private ClienteService clienteService;
 
-
     @Autowired
     private InterfazServiceCli cli;
 
@@ -47,7 +46,7 @@ public class MenuCli {
        while(true){
             try {
             String dni = solicitarDni();
-            clienteService.existeDni(dni);
+            clienteService.buscarClientePorDni(dni);
 
             List<CuentaBancaria> cuentas = cli.obtenerCuentasPorDni(dni);
             if (cuentas.isEmpty()) {
@@ -122,7 +121,5 @@ public class MenuCli {
             }
         }
     }
-
-    
 
 }
